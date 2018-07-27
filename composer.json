@@ -1,0 +1,12 @@
+{
+    "name": "mir24/pub-morph",
+    "description": "Morphes publication text after given ruleset",
+    "type": "library",
+    "authors": [
+        {
+            "name": "barantaran",
+            "email": "yourchev@gmail.com"
+        }
+    ],
+    "require": {}
+}
