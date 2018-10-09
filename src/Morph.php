@@ -11,7 +11,7 @@ class Morph extends AbstractPubMorph
     public function getHtmlStringWithRegexEncode($regex, $regexMatchNumber) {
         return preg_replace_callback(
             $regex,
-            function ($matches) {
+            function ($matches) use ($regexMatchNumber) {
                 return '{' . htmlspecialchars($matches[$regexMatchNumber]) . '}';
             },
             $this->parser->save()
