@@ -10,12 +10,14 @@ namespace MIR24\Morph;
 
 use Sunra\PhpSimple\HtmlDomParser;
 
-abstract class AbstractPubMorph extends HtmlDomParser 
+abstract class AbstractPubMorph
 {
     private $pubSource;
     
     function __construct($publicationSource){
         $this->pubSource = $publicationSource;
+        $this->parser = new HtmlDomParser();
+        $this->parser->load($publicationSource)
         return $this;
     }
 
