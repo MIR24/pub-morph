@@ -1,5 +1,5 @@
 {
-    "name": "mir24/pub-morph",
+    "name": "test-mir24/pub-morph",
     "description": "Morphes publication text after given ruleset",
     "type": "library",
     "authors": [
