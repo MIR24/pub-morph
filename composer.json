@@ -11,7 +11,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "MIR24\\PubMorph\\": "src/"
+            "MIR24\\Morph\\": "src/"
         }
     },
     "minimum-stability": "dev"
