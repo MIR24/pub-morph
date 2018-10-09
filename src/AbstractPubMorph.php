@@ -12,7 +12,7 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 abstract class AbstractPubMorph
 {
-    private $parser;
+    protected $parser;
     
     function __construct($publicationSource) {
         $this->parser = HtmlDomParser::str_get_html($publicationSource);
