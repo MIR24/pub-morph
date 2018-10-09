@@ -11,7 +11,7 @@ class Morph extends AbstractPubMorph
      * */ 
     public function removeIncut($nodeAttrValue) {
         return 1;
-    };
+    }
 
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
