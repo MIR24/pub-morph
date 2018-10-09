@@ -6,7 +6,7 @@
  * $publication = "<div>Some text. <div incut-id='42'>Incut text.</div></div>";
  * $incutRemoved = \MIR24\PubMorph\Morpher($publication)->removeIncut(42);
  * */
-namespace \MIR24\PubMorph;
+namespace MIR24\PubMorph;
 
 abstract class AbstractPubMorph 
 {
