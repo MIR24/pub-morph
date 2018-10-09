@@ -17,7 +17,7 @@ abstract class AbstractPubMorph
     function __construct($publicationSource){
         $this->pubSource = $publicationSource;
         $this->parser = new HtmlDomParser();
-        $this->parser->load($publicationSource)
+        $this->parser->load($publicationSource);
         return $this;
     }
 
