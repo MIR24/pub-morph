@@ -8,5 +8,6 @@
             "email": "yourchev@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "minimum-stability": "dev"
 }
