@@ -38,5 +38,5 @@ abstract class AbstractPubMorph
     abstract public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent);
 
     abstract public function removeRepeatingScripts();
-    abstract public function replaceImgSrcWithFullSrcCallback(string $compareTo, function $callback);
+    abstract public function replaceImgSrcWithFullSrcCallback(string $compareTo, $callback);
 }

@@ -44,7 +44,7 @@ class Morph extends AbstractPubMorph
         return $this;
     }
 
-    public function replaceImgSrcWithFullSrcCallback(string $compareTo, function $callback) {
+    public function replaceImgSrcWithFullSrcCallback(string $compareTo, $callback) {
         foreach ($this->parser->find('img') as $element) {
             if (strpos($element->src, $compareTo) === 0) {
                 $element->src = $callback($element->src);
