@@ -8,7 +8,9 @@
  * */
 namespace MIR24\Morph;
 
-abstract class AbstractPubMorph 
+use Sunra\PhpSimple\HtmlDomParser;
+
+abstract class AbstractPubMorph extends HtmlDomParser 
 {
     private $pubSource;
     
@@ -21,11 +23,11 @@ abstract class AbstractPubMorph
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
      * */ 
-    abstract public function removeIncut($nodeAttrValue);
+    abstract public function removeIncut(string $nodeAttrName, int $nodeAttrValue);
 
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
-    abstract public function placeIncut(int $nodeAttrValue, string $content);
+    abstract public function placeIncut(string $nodeAttrName, int $nodeAttrValue, string $content);
 }
