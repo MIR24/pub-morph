@@ -12,23 +12,28 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 abstract class AbstractPubMorph
 {
-    private $pubSource;
+    private $parser;
     
-    function __construct($publicationSource){
-        $this->pubSource = $publicationSource;
+    function __construct($publicationSource) {
         $this->parser = HtmlDomParser::str_get_html($publicationSource);
         return $this;
     }
+
+    function __destruct() {
+        $this->parser->clear();
+    }
+
+    abstract public function getHtmlString();
 
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
      * */ 
-    abstract public function removeIncut(string $nodeAttrName, int $nodeAttrValue);
+    abstract public function clearNodesContentByAttrName(string $nodeAttrName);
 
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
-    abstract public function placeIncut(string $nodeAttrName, int $nodeAttrValue, string $content);
+    abstract public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent);
 }
