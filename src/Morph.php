@@ -3,13 +3,13 @@ namespace MIR24\Morph;
 
 use MIR24\Morph\AbstractPubMorph;
 
-abstract class Morph extends AbstractPubMorph
+class Morph extends AbstractPubMorph
 {
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
      * */ 
-    abstract public function removeIncut($nodeAttrValue) {
+    public function removeIncut($nodeAttrValue) {
         return 1;
     };
 
@@ -17,7 +17,7 @@ abstract class Morph extends AbstractPubMorph
      * Search for DOM node inside pub text by attribute name and attribute value,
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
-    abstract public function placeIncut(int $nodeAttrValue, string $content) {
+    public function placeIncut(int $nodeAttrValue, string $content) {
         return 2;
     }
 }
