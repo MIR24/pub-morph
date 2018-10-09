@@ -36,4 +36,7 @@ abstract class AbstractPubMorph
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
     abstract public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent);
+
+    abstract public function removeRepeatingScripts();
+    abstract public function replaceImgSrcWithFullSrcCallback(string $compareTo, function $callback);
 }

@@ -25,8 +25,29 @@ class Morph extends AbstractPubMorph
      * */ 
     public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent) {
         foreach ($this->parser->find('*['. $nodeAttrName .']') as $element) {
-                if (isset($nodeAttrValueContent[$element->$nodeAttrName])) {
+            if (isset($nodeAttrValueContent[$element->$nodeAttrName])) {
                 $element->innertext = $nodeAttrValueContent[$element->$nodeAttrName];
+            }
+        }
+        return $this;
+    }
+
+    public function removeRepeatingScripts() {
+        $sameScripts = [];
+        foreach ($this->parser->find('script') as $element) {
+            if (in_array($element->outertext, $sameScripts)) {
+                $element->outertext = '';
+            } else {
+                $sameScripts[] = $element->outertext;
+            }
+        }
+        return $this;
+    }
+
+    public function replaceImgSrcWithFullSrcCallback(string $compareTo, function $callback) {
+        foreach ($this->parser->find('img') as $element) {
+            if (strpos($element->src, $compareTo) === 0) {
+                $element->src = $callback($element->src);
             }
         }
         return $this;
