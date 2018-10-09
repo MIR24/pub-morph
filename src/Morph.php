@@ -8,6 +8,15 @@ class Morph extends AbstractPubMorph
     public function getHtmlString() {
         return $this->parser->save();
     }
+    public function getHtmlStringWithRegexEncode($regex, $regexMatchNumber) {
+        return preg_replace_callback(
+            $regex,
+            function ($matches) {
+                return '{' . htmlspecialchars($matches[$regexMatchNumber]) . '}';
+            },
+            $this->parser->save()
+        );
+    }
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
