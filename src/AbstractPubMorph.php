@@ -24,7 +24,7 @@ abstract class AbstractPubMorph
     }
 
     abstract public function getHtmlString();
-    abstract public function getHtmlStringWithRegexEncode(string $regex, int $regexMatchNumber);
+    abstract public function getHtmlStringWithRegexEncode();
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
@@ -35,5 +35,5 @@ abstract class AbstractPubMorph
      * Search for DOM node inside pub text by attribute name and attribute value,
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
-    abstract public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent);
+    abstract public function replaceIncut(int $incutId, string $content);
 }

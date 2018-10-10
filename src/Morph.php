@@ -8,11 +8,11 @@ class Morph extends AbstractPubMorph
     public function getHtmlString() {
         return $this->parser->save();
     }
-    public function getHtmlStringWithRegexEncode(string $regex, int $regexMatchNumber) {
+    public function getHtmlStringWithRegexEncode() {
         return preg_replace_callback(
-            $regex,
-            function ($matches) use ($regexMatchNumber) {
-                return '{' . htmlspecialchars($matches[$regexMatchNumber]) . '}';
+            config('morph-lib.regex.removeBrackets'),
+            function ($matches) {
+                return '{' . htmlspecialchars($matches[config('morph-lib.regex.preg_match_number')]) . '}';
             },
             $this->parser->save()
         );
@@ -21,17 +21,9 @@ class Morph extends AbstractPubMorph
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
      * */
-    public function removeIncut(int $id) {
-        return config('constants.incut');
-    }
-    public function nodeCheckAttrAndReplace(string $nodeAttrName, $checkActive) {
-        foreach ($this->parser->find('*['. $nodeAttrName .']') as $element) {
-            $newValue = $checkActive($element->$nodeAttrName);
-            if (!$newValue) {
-                $element->parent->innertext = '';
-            } else {
-                $element->innertext = $newValue;
-            }
+    public function removeIncut(int $incutId) {
+        foreach ($this->findIncutsById($incutId) as $node) {
+            $node->parent->outertext = '';
         }
         return $this;
     }
@@ -40,12 +32,34 @@ class Morph extends AbstractPubMorph
      * Search for DOM node inside pub text by attribute name and attribute value,
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
-    public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent) {
-        foreach ($this->parser->find('*['. $nodeAttrName .']') as $element) {
-            if (isset($nodeAttrValueContent[$element->$nodeAttrName])) {
-                $element->innertext = $nodeAttrValueContent[$element->$nodeAttrName];
-            }
-        }
-        return $this;
-    }
+     public function replaceIncut(int $incutId, string $content) {
+         foreach ($this->findIncutsById($incutId) as $node) {
+             $node->parent->outertext = $content;
+         }
+         return $this;
+     }
+     
+     public function makeIncutInactive(int $incutId, string $incutTitle) {
+         foreach ($this->findIncutsById($incutId) as $node) {
+             $node->config('morph-lib.incut.tag.inactive.attr') = config('morph-lib.incut.tag.inactive.attrContent');
+             $node->innertext = config('morph-lib.incut.tag.inactive.msg').$incutTitle;
+         }
+         return $this;
+     }
+     
+     public function getIncutIds() {
+         $result = [];
+         foreach ($this->findIncuts() as $node) {
+             $result[] = $node->config('morph-lib.incut.attr');
+         }
+         return $result;
+     }
+     
+     private function findIncutsById(int $incutId) {
+         return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').'='.$incutId.']');
+     }
+     
+     private function findIncuts(int $incutId) {
+         return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').']');
+     }
 }
