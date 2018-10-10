@@ -58,5 +58,5 @@ abstract class AbstractPubMorph
     /*
      * Getting incut html tags ids attribute
      * */
-    abstract public function insertBannerAfter(int $countChars, int $countLimit, int $pNum, string $content);
+    abstract public function insertBannerAfter(int $countLimit, int $pNum, string $content);
 }
