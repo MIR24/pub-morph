@@ -63,7 +63,7 @@ abstract class AbstractPubMorph
     /*
      * Remove parent node if parent node is empty
      * */
-    private function removeParentNodeIfEmpty(HtmlDomParser\simplehtmldom_1_5\simple_html_dom_node $node) {
+    protected function removeParentNodeIfEmpty(HtmlDomParser\simplehtmldom_1_5\simple_html_dom_node $node) {
         if (!$node->parent->innertext) {
             $node->parent->outertext = '';
         }
