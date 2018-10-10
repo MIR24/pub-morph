@@ -59,4 +59,13 @@ abstract class AbstractPubMorph
      * Insert banner spot in text after character count
      * */
     abstract public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL);
+
+    /*
+     * Remove parent node if parent node is empty
+     * */
+    private function removeParentNodeIfEmpty(HtmlDomParser\simplehtmldom_1_5\simple_html_dom_node $node) {
+        if (!$node->parent->innertext) {
+            $node->parent->outertext = '';
+        }
+    }
 }
