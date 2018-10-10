@@ -28,6 +28,9 @@ class Morph extends AbstractPubMorph
     public function removeIncut(int $incutId) {
         foreach ($this->findIncutsById($incutId) as $node) {
             $node->outertext = '';
+            if (strlen($node->parent->innertext)) {
+                $node->parent->outertext = '';
+            }
         }
         return $this;
     }
