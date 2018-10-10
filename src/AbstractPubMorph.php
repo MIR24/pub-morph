@@ -48,10 +48,10 @@ abstract class AbstractPubMorph
      * Fillup node with a specific content, making incut interactive, than 
      * returns publication text morphed.
      * */ 
-    public function makeIncutInactive(int $incutId, string $incutTitle);
+    abstract public function makeIncutInactive(int $incutId, string $incutTitle);
 
     /*
      * Getting incut html tags ids attribute
      * */ 
-    public function getIncutIds();
+    abstract public function getIncutIds();
 }
