@@ -16,8 +16,6 @@ abstract class AbstractPubMorph
     protected $decode;
 
     function __construct($publicationSource, $decode = true) {
-        $this->app->configure('morph-lib');
-        var_dump(config('morph-lib'));
         $this->decode = $decode;
         if ($decode) {
             $this->parser = HtmlDomParser::str_get_html(htmlspecialchars_decode($publicationSource));

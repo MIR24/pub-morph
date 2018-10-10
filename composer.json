@@ -14,10 +14,7 @@
     "autoload": {
         "psr-4": {
             "MIR24\\Morph\\": "src/"
-        },
-        "files": [
-            "config/morph-lib.php"
-        ]
+        }
     },
     "minimum-stability": "dev"
 }
