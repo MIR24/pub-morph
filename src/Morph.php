@@ -11,8 +11,6 @@ class Morph extends AbstractPubMorph
      * */ 
     public function getHtmlString() {
         if ($this->decode) {
-            return $this->parser->save();
-        } else {
             return preg_replace_callback(
                 config('morph-lib.regex.removeBrackets'),
                 function ($matches) {
@@ -20,14 +18,9 @@ class Morph extends AbstractPubMorph
                 },
                 $this->parser->save()
             );
+        } else {
+            return $this->parser->save();
         }
-    }
-
-    /*
-     * Returns html string, with encoding, using regex
-     * */ 
-    public function getHtmlStringWithRegexEncode() {
-        
     }
 
     /*
