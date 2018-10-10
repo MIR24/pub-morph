@@ -75,7 +75,7 @@ class Morph extends AbstractPubMorph
      /*
       * Insert banner spot
       * */ 
-     public function insertBannerAfter(int $countLimit, int $pNum, string $content) {
+     public function insertBannerAfter(int $countLimit, int $pNum, string $content = NULL) {
          $countChars = 0;
          foreach ($this->parser->find('p') as $key => $p) {
              $countChars += strlen(strip_tags($p->plaintext));
