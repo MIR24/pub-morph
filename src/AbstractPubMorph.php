@@ -31,7 +31,7 @@ abstract class AbstractPubMorph
 
     /*
      * Returns html string, dependig of decoding attribute
-     * */ 
+     * */
     abstract public function getHtmlString();
 
     /*
@@ -41,22 +41,22 @@ abstract class AbstractPubMorph
 
     /*
      * Fillup node with a specific content, than returns publication text morphed.
-     * */ 
+     * */
     abstract public function replaceIncut(int $incutId, string $content);
 
     /*
      * Fillup node with a specific content, making incut interactive, than 
      * returns publication text morphed.
-     * */ 
+     * */
     abstract public function makeIncutInactive(int $incutId, string $incutTitle);
 
     /*
      * Getting incut html tags ids attribute
-     * */ 
+     * */
     abstract public function getIncutIds();
 
     /*
      * Getting incut html tags ids attribute
-     * */ 
+     * */
     abstract public function insertBannerAfter(int $countChars, int $countLimit, int $pNum, string $content);
 }
