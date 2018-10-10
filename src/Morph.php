@@ -104,4 +104,13 @@ class Morph extends AbstractPubMorph
      private function findIncuts() {
          return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').']');
      }
+
+     /*
+      * Remove parent node if parent node is empty
+      * */
+     private function removeParentNodeIfEmpty($node) {
+         if (!$node->parent->innertext) {
+             $node->parent->outertext = '';
+         }
+     }
 }
