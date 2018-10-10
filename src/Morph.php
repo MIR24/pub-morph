@@ -47,10 +47,14 @@ class Morph extends AbstractPubMorph
       * Fillup node with a specific content, making incut interactive, than 
       * returns publication text morphed.
       * */
-     public function makeIncutInactive(int $incutId, string $incutTitle) {
+     public function makeIncutInactive(int $incutId, string $incutTitle = NULL) {
          foreach ($this->findIncutsById($incutId) as $node) {
              $node->{config('morph-lib.incut.inactive.attr')} = config('morph-lib.incut.inactive.attrContent');
-             $node->innertext = config('morph-lib.incut.inactive.msg').$incutTitle;
+             if ($incutTitle) {
+                 $node->innertext = config('morph-lib.incut.inactive.msg').$incutTitle;
+             } else {
+                 $node->innertext = config('morph-lib.incut.delete.msg');
+             }
          }
          return $this;
      }
