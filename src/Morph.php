@@ -50,7 +50,7 @@ class Morph extends AbstractPubMorph
      public function getIncutIds() {
          $result = [];
          foreach ($this->findIncuts() as $node) {
-             $result[] = $node->config('morph-lib.incut.attr');
+             $result[] = $node->{config('morph-lib.incut.attr')};
          }
          return $result;
      }
