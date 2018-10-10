@@ -74,9 +74,9 @@ class Morph extends AbstractPubMorph
      }
 
      /*
-      * Insert banner spot
+      * Insert banner spot in text after character count
       * */ 
-     public function insertBannerAfter(int $countLimit, int $pNum, string $content = NULL) {
+     public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL) {
          if ($content) {
              $countChars = 0;
              foreach ($this->parser->find('p') as $key => $p) {
@@ -106,10 +106,10 @@ class Morph extends AbstractPubMorph
      }
 
      /*
-      * Remove parent node if node is empty
+      * Remove parent node if parent node is empty
       * */
-     private function removeParentNodeIfEmpty($node) {
-         if (empty($node->parent->innertext)) {
+     private function removeParentNodeIfEmpty(object $node) {
+         if (!$node->parent->innertext) {
              $node->parent->outertext = '';
          }
      }

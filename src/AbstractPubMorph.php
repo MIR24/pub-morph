@@ -56,7 +56,7 @@ abstract class AbstractPubMorph
     abstract public function getIncutIds();
 
     /*
-     * Getting incut html tags ids attribute
+     * Insert banner spot in text after character count
      * */
-    abstract public function insertBannerAfter(int $countLimit, int $pNum, string $content = NULL);
+    abstract public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL);
 }
