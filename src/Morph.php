@@ -59,7 +59,7 @@ class Morph extends AbstractPubMorph
          return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').'='.$incutId.']');
      }
      
-     private function findIncuts(int $incutId) {
+     private function findIncuts() {
          return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').']');
      }
 }
