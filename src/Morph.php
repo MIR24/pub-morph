@@ -108,7 +108,7 @@ class Morph extends AbstractPubMorph
      /*
       * Remove parent node if parent node is empty
       * */
-     private function removeParentNodeIfEmpty(object $node) {
+     private function removeParentNodeIfEmpty(simplehtmldom_1_5\simple_html_dom_node $node) {
          if (!$node->parent->innertext) {
              $node->parent->outertext = '';
          }
