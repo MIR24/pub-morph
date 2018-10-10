@@ -34,7 +34,7 @@ class Morph extends AbstractPubMorph
      * */ 
      public function replaceIncut(int $incutId, string $content) {
          foreach ($this->findIncutsById($incutId) as $node) {
-             $node->parent->outertext = $content;
+             $node->outertext = $content;
          }
          return $this;
      }
