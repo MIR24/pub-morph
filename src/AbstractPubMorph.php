@@ -24,19 +24,16 @@ abstract class AbstractPubMorph
     }
 
     abstract public function getHtmlString();
-
+    abstract public function getHtmlStringWithRegexEncode(string $regex, int $regexMatchNumber);
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
      * */ 
-    abstract public function clearNodesContentByAttrName(string $nodeAttrName);
+    abstract public function removeIncut(int $incutId);
 
     /*
      * Search for DOM node inside pub text by attribute name and attribute value,
      * fillup node with a specific content, than returns publication text morphed.
      * */ 
     abstract public function setNodesContentByAttrNameValue(string $nodeAttrName, array $nodeAttrValueContent);
-
-    abstract public function removeRepeatingScripts();
-    abstract public function replaceImgSrcWithFullSrcCallback(string $compareTo, $callback);
 }
