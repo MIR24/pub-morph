@@ -28,9 +28,7 @@ class Morph extends AbstractPubMorph
     public function removeIncut(int $incutId) {
         foreach ($this->findIncutsById($incutId) as $node) {
             $node->outertext = '';
-            if (empty($node->parent->innertext)) {//dd(1);
-                $node->parent->outertext = '';
-            }
+            $this->removeParentNodeIfEmpty($node);
         }
         return $this;
     }
@@ -105,5 +103,14 @@ class Morph extends AbstractPubMorph
       * */
      private function findIncuts() {
          return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').']');
+     }
+
+     /*
+      * Remove parent node if node is empty
+      * */
+     private function removeParentNodeIfEmpty($node) {
+         if (empty($node->parent->innertext)) {
+             $node->parent->outertext = '';
+         }
      }
 }
