@@ -66,6 +66,20 @@ class Morph extends AbstractPubMorph
      }
 
      /*
+      * Insert banner spot
+      * */ 
+     public function insertBannerAfter(int $countChars, int $countLimit, int $pNum, string $content) {
+         foreach ($this->parser->find('p') as $key => $p) {
+             $countChars += strlen(strip_tags($p->plaintext));
+             if ($countChars >= $countLimit && $key >= $pNum) {
+                 $p->outertext .= $content;
+                 break;
+             }
+         }
+         return $this;
+     }
+
+     /*
       * Search for DOM node inside pub text by attribute tag, attribute
       * and attribute value
       * */ 
