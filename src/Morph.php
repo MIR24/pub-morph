@@ -41,7 +41,7 @@ class Morph extends AbstractPubMorph
      
      public function makeIncutInactive(int $incutId, string $incutTitle) {
          foreach ($this->findIncutsById($incutId) as $node) {
-             $node->config('morph-lib.incut.inactive.attr') = config('morph-lib.incut.inactive.attrContent');
+             $node->{config('morph-lib.incut.inactive.attr')} = config('morph-lib.incut.inactive.attrContent');
              $node->innertext = config('morph-lib.incut.inactive.msg').$incutTitle;
          }
          return $this;
