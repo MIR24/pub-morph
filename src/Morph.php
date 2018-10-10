@@ -5,7 +5,6 @@ use MIR24\Morph\AbstractPubMorph;
 
 class Morph extends AbstractPubMorph
 {
-
     /*
      * Returns html string, dependig of decoding attribute
      * */ 
