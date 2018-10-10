@@ -21,7 +21,7 @@ class Morph extends AbstractPubMorph
      * Search for DOM node inside pub text by attribute name and attribute value,
      * removes node from publication, than returns publication text morphed.
      * */
-    public function removeIncut($id) {
+    public function removeIncut(int $id) {
         return config('constants.incut');
     }
     public function nodeCheckAttrAndReplace(string $nodeAttrName, $checkActive) {
