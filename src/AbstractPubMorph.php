@@ -28,12 +28,23 @@ abstract class AbstractPubMorph
     function __destruct() {
         $this->parser->clear();
     }
-
+    #------------------------ DOM Helpers start --------------------------------
     /*
      * Returns html string, dependig of decoding attribute
      * */
     abstract public function getHtmlString();
 
+    /*
+     * Return parser plaintext
+     * */
+    abstract public function getPlainText();
+
+    /*
+     * Remove parent node if parent node is empty
+     * */
+    abstract protected function removeParentNodeIfEmpty($node);
+    #------------------------ DOM Helpers end ----------------------------------
+    #----------------------- Incut start ---------------------------------------
     /*
      * Removes node from publication, than returns publication text morphed.
      * */
@@ -56,7 +67,21 @@ abstract class AbstractPubMorph
     abstract public function getIncutIds();
 
     /*
+     * Search for DOM node inside pub text by attribute tag, attribute
+     * and attribute value
+     * */
+    abstract protected function findIncutsById(int $incutId);
+
+    /*
+     * Search for DOM node inside pub text by attribute tag and attribute value
+     * */
+    abstract protected function findIncuts();
+    #----------------------- Incut end -----------------------------------------
+    #----------------------- Banner places start -------------------------------
+    /*
      * Insert banner spot in text after character count
      * */
     abstract public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL);
+    #----------------------- Banner places end ---------------------------------
 }
+?>

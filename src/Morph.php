@@ -5,6 +5,7 @@ use MIR24\Morph\AbstractPubMorph;
 
 class Morph extends AbstractPubMorph
 {
+    #------------------------ DOM Helpers start --------------------------------
     /*
      * Returns html string, dependig of decoding attribute
      * */
@@ -22,6 +23,23 @@ class Morph extends AbstractPubMorph
         }
     }
 
+    /*
+     * Return parser plaintext
+     * */
+    public function getPlainText() {
+        return $this->parser->plaintext;
+    }
+
+    /*
+     * Remove parent node if parent node is empty
+     * */
+    protected function removeParentNodeIfEmpty($node) {
+        if (!$node->parent->innertext) {
+            $node->parent->outertext = '';
+        }
+    }
+    #------------------------ DOM Helpers end ----------------------------------
+    #----------------------- Incut start ---------------------------------------
     /*
      * Removes node from publication, than returns publication text morphed.
      * */
@@ -71,50 +89,37 @@ class Morph extends AbstractPubMorph
      }
 
      /*
-      * Return parser plaintext
-      * */
-     public function getPlainText() {
-         return $this->parser->plaintext;
-     }
-
-     /*
-      * Insert banner spot in text after character count
-      * */ 
-     public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL) {
-         if ($content) {
-             $countChars = 0;
-             foreach ($this->parser->find('p') as $key => $p) {
-                 $countChars += strlen(strip_tags($p->plaintext));
-                 if ($countChars >= $countLimit && $key >= $pNum) {
-                     $p->outertext .= $content;
-                     break;
-                 }
-             } 
-         }
-         return $this;
-     }
-
-     /*
       * Search for DOM node inside pub text by attribute tag, attribute
       * and attribute value
       * */
-     private function findIncutsById(int $incutId) {
+     protected function findIncutsById(int $incutId) {
          return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').'='.$incutId.']');
      }
 
      /*
       * Search for DOM node inside pub text by attribute tag and attribute value
       * */
-     private function findIncuts() {
+     protected function findIncuts() {
          return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').']');
      }
-
-     /*
-      * Remove parent node if parent node is empty
-      * */
-     private function removeParentNodeIfEmpty($node) {
-         if (!$node->parent->innertext) {
-             $node->parent->outertext = '';
-         }
-     }
+    #----------------------- Incut end -----------------------------------------
+    #----------------------- Banner places start -------------------------------
+    /*
+     * Insert banner spot in text after character count
+     * */
+    public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL) {
+        if ($content) {
+            $countChars = 0;
+            foreach ($this->parser->find('p') as $key => $p) {
+                $countChars += strlen(strip_tags($p->plaintext));
+                if ($countChars >= $countLimit && $key >= $pNum) {
+                    $p->outertext .= $content;
+                    break;
+                }
+            }
+        }
+        return $this;
+    }
+    #----------------------- Banner places end ---------------------------------
 }
+?>
