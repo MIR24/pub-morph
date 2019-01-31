@@ -1,8 +1,6 @@
 <?php
 namespace MIR24\Morph;
 
-use MIR24\Morph\Exception\Exception;
-
 class Config
 {
     // Config file prefix

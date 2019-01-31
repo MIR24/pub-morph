@@ -2,7 +2,6 @@
 namespace MIR24\Morph;
 
 use MIR24\Morph\AbstractPubMorph;
-use MIR24\Morph\Config\Config;
 
 class Morph extends AbstractPubMorph
 {
