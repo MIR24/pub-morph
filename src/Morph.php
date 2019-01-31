@@ -84,7 +84,7 @@ class Morph extends AbstractPubMorph
              $node->innertext = Config::get('incut.delete.msg');
          }
          return $this;
-     };
+     }
 
      /*
       * Getting incut html tags ids attribute
