@@ -2,6 +2,7 @@
 namespace MIR24\Morph;
 
 use MIR24\Morph\AbstractPubMorph;
+use MIR24\Morph\Config\Config;
 
 class Morph extends AbstractPubMorph
 {
@@ -62,20 +63,28 @@ class Morph extends AbstractPubMorph
      }
 
      /*
-      * Fillup node with a specific content, making incut interactive, than 
+      * Fillup node with a specific content, making incut interactive, than
       * returns publication text morphed.
       * */
-     public function makeIncutInactive(int $incutId, string $incutTitle = NULL) {
+     public function makeIncutInactive(int $incutId, string $incutTitle) {
          foreach ($this->findIncutsById($incutId) as $node) {
              $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
-             if ($incutTitle) {
-                 $node->innertext = Config::get('incut.inactive.msg').$incutTitle;
-             } else {
-                 $node->innertext = Config::get('incut.delete.msg');
-             }
+             $node->innertext = Config::get('incut.inactive.msg').$incutTitle;
          }
          return $this;
      }
+
+     /*
+      * Fillup node with a specific content, making incut deleted, than
+      * returns publication text morphed.
+      * */
+     public function makeIncutDeleted(int $incutId) {
+         foreach ($this->findIncutsById($incutId) as $node) {
+             $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
+             $node->innertext = Config::get('incut.delete.msg');
+         }
+         return $this;
+     };
 
      /*
       * Getting incut html tags ids attribute

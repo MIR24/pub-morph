@@ -56,10 +56,16 @@ abstract class AbstractPubMorph
     abstract public function replaceIncut(int $incutId, string $content);
 
     /*
-     * Fillup node with a specific content, making incut interactive, than 
+     * Fillup node with a specific content, making incut interactive, than
      * returns publication text morphed.
      * */
-    abstract public function makeIncutInactive(int $incutId, string $incutTitle = NULL);
+    abstract public function makeIncutInactive(int $incutId, string $incutTitle);
+
+    /*
+     * Fillup node with a specific content, making incut deleted, than
+     * returns publication text morphed.
+     * */
+    abstract public function makeIncutDeleted(int $incutId);
 
     /*
      * Getting incut html tags ids attribute

@@ -1,5 +1,5 @@
 <?php
-namespace MIR24\Morph;
+namespace MIR24\Morph\Exception;
 
 class Exception
 {
