@@ -12,9 +12,9 @@ class Morph extends AbstractPubMorph
     public function getHtmlString() {
         if ($this->decode) {
             return preg_replace_callback(
-                config('morph-lib.regex.removeBrackets'),
+                Config::get('regex.removeBrackets'),
                 function ($matches) {
-                    return '{' . htmlspecialchars($matches[config('morph-lib.regex.preg_match_number')]) . '}';
+                    return '{' . htmlspecialchars($matches[Config::get('regex.preg_match_number')]) . '}';
                 },
                 $this->parser->save()
             );
@@ -67,11 +67,11 @@ class Morph extends AbstractPubMorph
       * */
      public function makeIncutInactive(int $incutId, string $incutTitle = NULL) {
          foreach ($this->findIncutsById($incutId) as $node) {
-             $node->{config('morph-lib.incut.inactive.attr')} = config('morph-lib.incut.inactive.attrContent');
+             $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
              if ($incutTitle) {
-                 $node->innertext = config('morph-lib.incut.inactive.msg').$incutTitle;
+                 $node->innertext = Config::get('incut.inactive.msg').$incutTitle;
              } else {
-                 $node->innertext = config('morph-lib.incut.delete.msg');
+                 $node->innertext = Config::get('incut.delete.msg');
              }
          }
          return $this;
@@ -83,7 +83,7 @@ class Morph extends AbstractPubMorph
      public function getIncutIds() {
          $result = [];
          foreach ($this->findIncuts() as $node) {
-             $result[] = $node->{config('morph-lib.incut.attr')};
+             $result[] = $node->{Config::get('incut.attr')};
          }
          return $result;
      }
@@ -93,14 +93,14 @@ class Morph extends AbstractPubMorph
       * and attribute value
       * */
      protected function findIncutsById(int $incutId) {
-         return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').'='.$incutId.']');
+         return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$incutId.']');
      }
 
      /*
       * Search for DOM node inside pub text by attribute tag and attribute value
       * */
      protected function findIncuts() {
-         return $this->parser->find(config('morph-lib.incut.tag').'['. config('morph-lib.incut.attr').']');
+         return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').']');
      }
     #----------------------- Incut end -----------------------------------------
     #----------------------- Banner places start -------------------------------
