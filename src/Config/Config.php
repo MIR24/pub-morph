@@ -12,7 +12,8 @@ class Config
      * Returns config result
      * */
     public static function get ($sufix) {
-        $config = config(self::$prefix.$sufix)
+        $config = config(self::$prefix.$sufix);
+
         if ($config !== NULL) {
             return $config;
         } else {
