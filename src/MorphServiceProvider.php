@@ -7,9 +7,11 @@ use Laravel\Lumen\Application as LumenApplication;
 
 use App\Incut;
 
+use MIR24\Morph\Config\Const;
+
 class MorphServiceProvider extends ServiceProvider
 {
-    private $configName = 'pub-morph';
+    private $configName = Const::CONFIG_NAME;
     private $configExtension = '.php';
 
     /**
