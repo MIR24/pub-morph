@@ -9,15 +9,14 @@
 namespace MIR24\Morph;
 
 use Sunra\PhpSimple\HtmlDomParser;
+use MIR24\Morph\Config\Config;
 
 abstract class AbstractPubMorph
 {
     protected $parser;
-    protected $decode;
 
-    function __construct($publicationSource, $decode = true) {
-        $this->decode = $decode;
-        if ($decode) {
+    function __construct($publicationSource) {
+        if (Config::get('decoded')) {
             $this->parser = HtmlDomParser::str_get_html(htmlspecialchars_decode($publicationSource));
         } else {
             $this->parser = HtmlDomParser::str_get_html($publicationSource);

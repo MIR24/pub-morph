@@ -1,12 +1,13 @@
 <?php
 namespace MIR24\Morph\Config;
 
+use MIR24\Morph\Config\Constants;
 use MIR24\Morph\Exception\Exception;
 
 class Config
 {
     // Config file prefix
-    protected static $prefix = 'morph-lib.';
+    protected static $prefix = Constants::CONFIG_NAME . '.';
 
     /*
      * Returns config result
