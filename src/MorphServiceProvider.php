@@ -35,6 +35,9 @@ class MorphServiceProvider extends ServiceProvider
         ]);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function register(){}
         
     private function getConfigPath() {
