@@ -11,7 +11,7 @@ class Morph extends AbstractPubMorph
      * Returns html string, dependig of decoding attribute
      * */
     public function getHtmlString() {
-        if ($this->decode) {
+        if (Config::get('decoded')) {
             return preg_replace_callback(
                 Config::get('regex.removeBrackets'),
                 function ($matches) {
