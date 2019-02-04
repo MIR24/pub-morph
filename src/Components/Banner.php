@@ -10,7 +10,7 @@ use MIR24\Morph\Config\Config;
 class Banner extends AbstractComponent implements Process, IsAllowed {
 
     public function isAllowed () {
-        if ($this->parser->plaintext > Config::get('ingrid.strlen-pass')) {
+        if (strlen($this->parser->plaintext) > Config::get('ingrid.strlen-pass')) {
             return true;
         }
         return false;
