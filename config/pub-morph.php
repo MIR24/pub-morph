@@ -17,6 +17,12 @@ return [
         'delete' => [
             'msg' => 'УДАЛЕНА ВРЕЗКА'
         ]
-    ]
+    ],
+    'ingrid' => [
+        'strlen-pass' => 1200,
+        'after-chars-article' => 1200,
+        'after-chars-news' => 850,
+        'after-p-num' => 2,
+    ],
 ];
 ?>

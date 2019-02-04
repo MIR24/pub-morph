@@ -10,7 +10,10 @@ use MIR24\Morph\Config\Config;
 class Banner extends AbstractComponent implements Process, IsAllowed {
 
     public function isAllowed () {
-        return true;
+        if ($this->parser->plaintext > Config::get('ingrid.strlen-pass')) {
+            return true;
+        }
+        return false;
     }
 
     public function process () {
@@ -20,21 +23,24 @@ class Banner extends AbstractComponent implements Process, IsAllowed {
     /*
      * Insert banner spot in text after character count
      * */
-    /*public function insertBannerInTextAfter(int $countLimit, int $pNum, string $content = NULL) {
-        if ($content) {
-            $countChars = 0;
-            foreach ($this->parser->find('p') as $key => $p) {
-                $countChars += strlen(strip_tags($p->plaintext));
-                if ($countChars >= $countLimit && $key >= $pNum) {
-                    $p->outertext .= $content;
-                    break;
-                }
+    private function insertInText () {
+        switch ($this->processType) {
+            case 0:
+                $countLimit = config('ingrid.after-chars-article');
+                break;
+            default:
+                $countLimit = config('ingrid.after-chars-news');
+        }
+
+        $countChars = 0;
+        foreach ($this->parser->find('p') as $key => $p) {
+            $countChars += strlen(strip_tags($p->plaintext));
+            if ($countChars >= $countLimit && $key >= Config::get('ingrid.after-p-num')-1) {
+                $p->outertext .= $this->processData;
+                break;
             }
         }
-        return $this;
-    }*/
-
-    private function insertInText () {}
+    }
 
 }
 ?>
