@@ -8,7 +8,7 @@ trait DomHelper {
     /*
      * Remove parent node if parent node is empty
      * */
-    private function removeParentNodeIfEmpty (&$node) {
+    private function removeParentNodeIfEmpty ($node) {
         if (!$node->parent->innertext || $node->parent->innertext === Config::get('emptyBrackets')) {
             $node->parent->outertext = '';
         }
@@ -17,7 +17,7 @@ trait DomHelper {
     /*
      * Returns nodes attribute values or NULL
      * */
-    private function getNodesAttributeValue (&$nodes, $attr) {
+    private function getNodesAttributeValue ($nodes, $attr) {
         $result = NULL;
         foreach ($nodes as $node) {
             $result[] = $node->{$attr};
