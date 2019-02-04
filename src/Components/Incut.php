@@ -30,7 +30,7 @@ class Incut extends AbstractComponent implements Process, Attribute {
         }
     }
 
-    private function processFrontend ($array) {
+    private function processFrontend () {
         foreach ($this->processData as $one) {
             if ($one['active']) {
                 $this->replaceIncut($one['id'], $one['code']);
