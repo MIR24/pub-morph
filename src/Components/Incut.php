@@ -1,5 +1,5 @@
 <?php
-namespace MIR24\Morph;
+namespace MIR24\Morph\Components;
 
 use MIR24\Morph\Interfaces\Components\Process;
 use MIR24\Morph\Interfaces\Components\Attribute;
