@@ -39,8 +39,8 @@ class Morph extends AbstractMorph {
         return $this;
     }
 
-    public function getAttributes ($type = NULL) {
-        return $this->component->getAttributes($type);
+    public function getAttributeValues ($type = NULL) {
+        return $this->component->getAttributeValues($type);
     }
 
     public function isAllowed () {

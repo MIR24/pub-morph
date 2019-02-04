@@ -13,12 +13,12 @@ class Incut extends AbstractComponent implements Process, Attribute {
 
     use DomHelper;
 
-    public function getAttributes ($type = NULL) {
+    public function getAttributeValues ($type = NULL) {
         return $this->getNodesAttributeValue($this->findIncuts(), Config::get('incut.attr'));
     }
 
     public function process () {
-        $this->allIds = $this->getAttributes('id');
+        $this->allIds = $this->getAttributeValues('id');
 
         switch ($this->processType) {
             case 'backend':
