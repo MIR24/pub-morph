@@ -23,22 +23,32 @@ class Morph extends AbstractMorph {
 
     public function process () {
         $this->component->process();
+
+        return $this;
     }
 
     public function setProcessType ($type) {
         $this->component->processType = $type;
+
+        return $this;
     }
 
     public function setProcessData ($data) {
         $this->component->processData = $data;
+
+        return $this;
     }
 
     public function getAttribute ($type) {
         $this->component->getAttribute($type);
+
+        return $this;
     }
 
     public function isAllowed () {
         $this->component->isAllowed();
+
+        return $this;
     }
 
 }
