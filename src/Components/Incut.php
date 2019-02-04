@@ -55,7 +55,7 @@ class Incut extends AbstractComponent implements Process, Attribute {
             } else {
                 $this->makeIncutInactive($one['id'], $one['head_text']);
             }
-            $this->allIds = array_diff($foundIds, [$one['id']]);
+            $this->allIds = array_diff($this->allIds, [$one['id']]);
         }
 
         if (!empty($this->allIds)) {
