@@ -34,7 +34,7 @@ class Banner extends AbstractComponent implements Process, IsAllowed {
         return $this;
     }*/
 
-    public function insertInText () {}
+    private function insertInText () {}
 
 }
 ?>

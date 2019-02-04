@@ -2,6 +2,6 @@
 namespace MIR24\Morph\Interfaces\Components;
 
 interface Attribute {
-    public function getAttribute ($type);
+    public function getAttributes ($type = NULL);
 }
 ?>

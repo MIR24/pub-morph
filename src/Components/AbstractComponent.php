@@ -5,9 +5,9 @@ use MIR24\Morph\Interfaces\Components\Process;
 
 abstract class AbstractComponent implements Process {
 
-    private $parser = NULL;
-    private $processType = NULL;
-    private $processData = NULL;
+    protected $parser = NULL;
+    protected $processType = NULL;
+    protected $processData = NULL;
 
     function __construct(&$parser) {
         $this->parser = $parser;

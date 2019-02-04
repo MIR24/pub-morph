@@ -2,6 +2,7 @@
 
 return [
     'decoded' => false,
+    'emptyBrackets' => '{}',
     'regex' => [
         'removeBrackets' => '#\{(\s+|)((<|&lt;).*?(>|&gt;))(\s+|)\}#s',
         'preg_match_number' => '2',
