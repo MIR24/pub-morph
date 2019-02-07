@@ -17,7 +17,7 @@ class Incut extends AbstractComponent implements Attribute {
     }
 
     public function process () {
-        $this->allIds = $this->getAttributeValues('id');
+        $this->allFoundIds = $this->getAttributeValues('id');
 
         switch ($this->processType) {
             case 'backend':
@@ -36,14 +36,14 @@ class Incut extends AbstractComponent implements Attribute {
             } else {
                 $this->remove($data['id']);
             }
-            $this->allIds = array_diff($this->allIds, [$data['id']]);
+            $this->allFoundIds = array_diff($this->allFoundIds, [$data['id']]);
         }
 
-        if (!empty($this->allIds)) {
-            foreach ($this->allIds as $id) {
+        if (!empty($this->allFoundIds)) {
+            foreach ($this->allFoundIds as $id) {
                 $this->remove($id);
             }
-            unset($this->allIds);
+            unset($this->allFoundIds);
         }
     }
 
@@ -54,22 +54,22 @@ class Incut extends AbstractComponent implements Attribute {
             } else {
                 $this->makeIncutInactive($data['id'], $data['head_text']);
             }
-            $this->allIds = array_diff($this->allIds, [$data['id']]);
+            $this->allFoundIds = array_diff($this->allFoundIds, [$data['id']]);
         }
 
-        if (!empty($this->allIds)) {
-            foreach ($this->allIds as $id) {
+        if (!empty($this->allFoundIds)) {
+            foreach ($this->allFoundIds as $id) {
                 $this->makeDeleted($id);
             }
-            unset($this->allIds);
+            unset($this->allFoundIds);
         }
     }
 
     /*
      * Removes node from publication, than returns publication text morphed.
      * */
-    private function remove(int $incutId) {
-        foreach ($this->findById($incutId) as $node) {
+    private function remove(int $id) {
+        foreach ($this->findById($id) as $node) {
             $node->outertext = '';
             $this->removeParentNodeIfEmpty($node);
         }
@@ -79,8 +79,8 @@ class Incut extends AbstractComponent implements Attribute {
     /*
      * Fillup node with a specific content, than returns publication text morphed.
      * */
-    private function replace(int $incutId, string $content) {
-         foreach ($this->findById($incutId) as $node) {
+    private function replace(int $id, string $content) {
+         foreach ($this->findById($id) as $node) {
              $node->outertext = $content;
          }
          return $this;
@@ -115,7 +115,7 @@ class Incut extends AbstractComponent implements Attribute {
       * and attribute value
       * */
     private function findById (int $id) {
-         return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$incutId.']');
+         return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$id.']');
      }
 
      /*
