@@ -13,7 +13,7 @@ class Incut extends AbstractComponent implements Attribute {
     use DomHelper;
 
     public function getAttributeValues ($type = NULL) {
-        return $this->getNodesAttributeValue($this->findIncuts(), Config::get('incut.attr'));
+        return $this->getNodesAttributeValue($this->find(), Config::get('incut.attr'));
     }
 
     public function process () {
@@ -30,36 +30,36 @@ class Incut extends AbstractComponent implements Attribute {
     }
 
     private function processFrontend () {
-        foreach ($this->processData as $one) {
-            if ($one['active']) {
-                $this->replaceIncut($one['id'], $one['code']);
+        foreach ($this->processData as $data) {
+            if ($data['active']) {
+                $this->replace($data['id'], $data['code']);
             } else {
-                $this->removeIncut($one['id']);
+                $this->remove($data['id']);
             }
-            $this->allIds = array_diff($this->allIds, [$one['id']]);
+            $this->allIds = array_diff($this->allIds, [$data['id']]);
         }
 
         if (!empty($this->allIds)) {
             foreach ($this->allIds as $id) {
-                $this->removeIncut($id);
+                $this->remove($id);
             }
             unset($this->allIds);
         }
     }
 
     private function processBackend () {
-        foreach ($this->processData as $one) {
-            if ($one['active']) {
-                $this->replaceIncut($one['id'], $one['code']);
+        foreach ($this->processData as $data) {
+            if ($data['active']) {
+                $this->replace($data['id'], $data['code']);
             } else {
-                $this->makeIncutInactive($one['id'], $one['head_text']);
+                $this->makeIncutInactive($data['id'], $data['head_text']);
             }
-            $this->allIds = array_diff($this->allIds, [$one['id']]);
+            $this->allIds = array_diff($this->allIds, [$data['id']]);
         }
 
         if (!empty($this->allIds)) {
             foreach ($this->allIds as $id) {
-                $this->makeIncutDeleted($id);
+                $this->makeDeleted($id);
             }
             unset($this->allIds);
         }
@@ -68,8 +68,8 @@ class Incut extends AbstractComponent implements Attribute {
     /*
      * Removes node from publication, than returns publication text morphed.
      * */
-    private function removeIncut(int $incutId) {
-        foreach ($this->findIncutsById($incutId) as $node) {
+    private function remove(int $incutId) {
+        foreach ($this->findById($incutId) as $node) {
             $node->outertext = '';
             $this->removeParentNodeIfEmpty($node);
         }
@@ -79,8 +79,8 @@ class Incut extends AbstractComponent implements Attribute {
     /*
      * Fillup node with a specific content, than returns publication text morphed.
      * */
-    private function replaceIncut(int $incutId, string $content) {
-         foreach ($this->findIncutsById($incutId) as $node) {
+    private function replace(int $incutId, string $content) {
+         foreach ($this->findById($incutId) as $node) {
              $node->outertext = $content;
          }
          return $this;
@@ -90,10 +90,10 @@ class Incut extends AbstractComponent implements Attribute {
       * Fillup node with a specific content, making incut interactive, than
       * returns publication text morphed.
       * */
-    private function makeIncutInactive (int $incutId, string $incutTitle) {
-         foreach ($this->findIncutsById($incutId) as $node) {
+    private function makeInactive (int $id, string $title) {
+         foreach ($this->findById($id) as $node) {
              $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
-             $node->innertext = Config::get('incut.inactive.msg').$incutTitle;
+             $node->innertext = Config::get('incut.inactive.msg').$title;
          }
          return $this;
      }
@@ -102,8 +102,8 @@ class Incut extends AbstractComponent implements Attribute {
       * Fillup node with a specific content, making incut deleted, than
       * returns publication text morphed.
       * */
-    private function makeIncutDeleted (int $incutId) {
-         foreach ($this->findIncutsById($incutId) as $node) {
+    private function makeDeleted (int $id) {
+         foreach ($this->findById($id) as $node) {
              $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
              $node->innertext = Config::get('incut.delete.msg');
          }
@@ -114,14 +114,14 @@ class Incut extends AbstractComponent implements Attribute {
       * Search for DOM node inside pub text by attribute tag, attribute
       * and attribute value
       * */
-    private function findIncutsById (int $incutId) {
+    private function findById (int $id) {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$incutId.']');
      }
 
      /*
       * Search for DOM node inside pub text by attribute tag and attribute value
       * */
-    private function findIncuts () {
+    private function find () {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').']');
      }
 
