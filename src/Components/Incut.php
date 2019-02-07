@@ -12,10 +12,16 @@ class Incut extends AbstractComponent implements Attribute {
 
     use DomHelper;
 
+    /*
+     * Implementing interface Attribute
+     * */
     public function getAttributeValues ($type = NULL) {
         return $this->getNodesAttributeValue($this->find(), Config::get('incut.attr'));
     }
 
+    /*
+     * Implementing interface Process
+     * */
     public function process () {
         $this->allFoundIds = $this->getAttributeValues('id');
 
@@ -29,6 +35,9 @@ class Incut extends AbstractComponent implements Attribute {
         }
     }
 
+    /*
+     * Processing backend type
+     * */
     private function processFrontend () {
         foreach ($this->processData as $data) {
             if ($data['active']) {
@@ -47,12 +56,15 @@ class Incut extends AbstractComponent implements Attribute {
         }
     }
 
+    /*
+     * Processing frontend type
+     * */
     private function processBackend () {
         foreach ($this->processData as $data) {
             if ($data['active']) {
                 $this->replace($data['id'], $data['code']);
             } else {
-                $this->makeIncutInactive($data['id'], $data['head_text']);
+                $this->makeInactive($data['id'], $data['head_text']);
             }
             $this->allFoundIds = array_diff($this->allFoundIds, [$data['id']]);
         }
@@ -88,7 +100,6 @@ class Incut extends AbstractComponent implements Attribute {
 
      /*
       * Fillup node with a specific content, making incut interactive, than
-      * returns publication text morphed.
       * */
     private function makeInactive (int $id, string $title) {
          foreach ($this->findById($id) as $node) {
@@ -100,7 +111,6 @@ class Incut extends AbstractComponent implements Attribute {
 
      /*
       * Fillup node with a specific content, making incut deleted, than
-      * returns publication text morphed.
       * */
     private function makeDeleted (int $id) {
          foreach ($this->findById($id) as $node) {
@@ -111,15 +121,14 @@ class Incut extends AbstractComponent implements Attribute {
      }
 
      /*
-      * Search for DOM node inside pub text by attribute tag, attribute
-      * and attribute value
+      * Search for DOM node by attribute tag, attribute and attribute value
       * */
     private function findById (int $id) {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$id.']');
      }
 
      /*
-      * Search for DOM node inside pub text by attribute tag and attribute value
+      * Search for DOM node by attribute tag and attribute value
       * */
     private function find () {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').']');

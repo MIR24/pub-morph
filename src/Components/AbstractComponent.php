@@ -15,10 +15,16 @@ abstract class AbstractComponent implements Process {
         return $this;
     }
 
+    /*
+     * Implementing interface Process
+     * */
     public function setProcessType ($type) {
         $this->processType = $type;
     }
 
+    /*
+     * Implementing interface Process
+     * */
     public function setProcessData ($data) {
         $this->processData = $data;
     }

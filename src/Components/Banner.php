@@ -8,6 +8,9 @@ use MIR24\Morph\Config\Config;
 
 class Banner extends AbstractComponent implements IsAllowed {
 
+    /*
+     * Implementing interface IsAllowed
+     * */
     public function isAllowed () {
         if (strlen($this->parser->plaintext) > Config::get('ingrid.strlen-pass')) {
             return true;
@@ -15,6 +18,9 @@ class Banner extends AbstractComponent implements IsAllowed {
         return false;
     }
 
+    /*
+     * Implementing interface Process
+     * */
     public function process () {
         $this->insertInText();
     }

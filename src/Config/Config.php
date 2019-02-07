@@ -6,11 +6,10 @@ use MIR24\Morph\Exception\Exception;
 
 class Config
 {
-    // Config file prefix
     protected static $prefix = Constants::CONFIG_NAME . '.';
 
     /*
-     * Returns config result
+     * Returns config result or throws error
      * */
     public static function get ($sufix) {
         $config = config(self::$prefix.$sufix);
