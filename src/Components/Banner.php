@@ -34,7 +34,7 @@ class Banner extends AbstractComponent implements IsAllowed {
         $countChars = 0;
         foreach ($this->parser->find('p') as $key => $p) {
             $countChars += strlen(strip_tags($p->plaintext));
-            if ($countChars >= $countLimit && $key >= Config::get('ingrid.after-p-num')-1) {
+            if ($countChars >= $countLimit && $key >= Config::get('ingrid.after-p-num')) {
                 $p->outertext .= $this->processData;
                 break;
             }

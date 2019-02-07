@@ -22,7 +22,7 @@ return [
         'strlen-pass' => 1200,
         'after-chars-article' => 1200,
         'after-chars-news' => 850,
-        'after-p-num' => 2,
+        'after-p-num' => 1,
     ],
 ];
 ?>
