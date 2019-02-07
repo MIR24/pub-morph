@@ -1,7 +1,6 @@
 <?php
 namespace MIR24\Morph\Components;
 
-use MIR24\Morph\Interfaces\Components\Process;
 use MIR24\Morph\Interfaces\Components\Attribute;
 
 use MIR24\Morph\Components\AbstractComponent;
@@ -9,7 +8,7 @@ use MIR24\Morph\Config\Config;
 
 use MIR24\Morph\Traits\DomHelper;
 
-class Incut extends AbstractComponent implements Process, Attribute {
+class Incut extends AbstractComponent implements Attribute {
 
     use DomHelper;
 

@@ -1,13 +1,12 @@
 <?php
 namespace MIR24\Morph\Components;
 
-use MIR24\Morph\Interfaces\Components\Process;
 use MIR24\Morph\Interfaces\Components\IsAllowed;
 
 use MIR24\Morph\Components\AbstractComponent;
 use MIR24\Morph\Config\Config;
 
-class Banner extends AbstractComponent implements Process, IsAllowed {
+class Banner extends AbstractComponent implements IsAllowed {
 
     public function isAllowed () {
         if (strlen($this->parser->plaintext) > Config::get('ingrid.strlen-pass')) {

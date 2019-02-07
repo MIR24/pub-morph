@@ -15,8 +15,6 @@ abstract class AbstractComponent implements Process {
         return $this;
     }
 
-    abstract public function process ();
-
     public function setProcessType ($type) {
         $this->processType = $type;
     }
