@@ -17,7 +17,7 @@ trait DomHelper {
     /*
      * Returns nodes attribute values or NULL
      * */
-    private function getNodesAttributeValue ($nodes, $attr) {
+    private function getNodesAttributeValues ($nodes, $attr) {
         $result = NULL;
         foreach ($nodes as $node) {
             $result[] = $node->{$attr};

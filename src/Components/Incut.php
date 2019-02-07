@@ -16,7 +16,7 @@ class Incut extends AbstractComponent implements Attribute {
      * Implementing interface Attribute
      * */
     public function getAttributeValues ($type = NULL) {
-        return $this->getNodesAttributeValue($this->find(), Config::get('incut.attr'));
+        return $this->getNodesAttributeValues($this->find(), Config::get('incut.attr'));
     }
 
     /*
