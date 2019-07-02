@@ -17,8 +17,7 @@ class MorphServiceProvider extends ServiceProvider
     /**
      * {@inheritdoc}
      */
-    public function boot()
-    {
+    public function boot () {
         if ($this->app instanceof LumenApplication) {
             $this->app->configure($this->configName);
         } else {
@@ -38,12 +37,12 @@ class MorphServiceProvider extends ServiceProvider
     /**
      * {@inheritdoc}
      */
-    public function register(){}
-        
-    private function getConfigPath() {
+    public function register () {}
+
+    private function getConfigPath () {
         return __DIR__ . '/../config/' . $this->getConfigFullName();
     }
-    
+
     private function getConfigFullName () {
         return $this->configName.$this->configExtension;
     }

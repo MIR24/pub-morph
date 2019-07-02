@@ -1,16 +1,15 @@
 <?php
 namespace MIR24\Morph\Exception;
 
+use MIR24\Morph\Config\Constants;
+
 class Exception
 {
-    // Deafult error start
-    protected static $libName = 'MIR24/pub-morph'.PHP_EOL;
-
     /*
      * Throw exception with additionl message
      * */
     public static function throw ($msg) {
-        throw new \Exception(self::$libName.$msg);
+        throw new \Exception(Constants::EXCEPTION_MSG_START . PHP_EOL . $msg);
     }
 }
 ?>
