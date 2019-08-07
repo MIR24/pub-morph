@@ -10,7 +10,7 @@ abstract class AbstractMorph
     protected $parser;
     protected $component;
 
-    function __construct ($publicationSource = '') {
+    function __construct ($publicationSource) {
         $this->parser = HtmlDomParser::str_get_html($this->processLoadingHtmlString($publicationSource));
 
         return $this;
@@ -31,7 +31,7 @@ abstract class AbstractMorph
      * Clear memory and load new string
      * */
     public function setHtmlString ($str) {
-        $this->parser->clear()->load($this->processLoadingHtmlString($str));
+        $this->parser->load($this->processLoadingHtmlString($str));
     }
 
     /*
