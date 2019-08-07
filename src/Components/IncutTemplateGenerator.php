@@ -16,7 +16,7 @@ class IncutTemplateGenerator extends AbstractComponent {
         $this->processRootNodeIdAttribute();
         foreach ($this->processData['fields'] as $data) {
             foreach ($this->findByAttributeName($data['data_attr']['value']) as $node) {
-                $this->processAttributeByType($node, $node->{$data['data_attr']['value']}, $data['value']);
+                $this->processAttributeByType($node, $data['data_attr']['value'], $data['value']);
             }
         }
     }
@@ -38,7 +38,8 @@ class IncutTemplateGenerator extends AbstractComponent {
     /*
      * Process data attributes and insert the values
      * */
-    private function processAttributeByType ($node, $type, $value) {
+    private function processAttributeByType ($node, $attrName, $value) {
+        $type = $node->{$attrName};
         if (!$type) {
             Exception::throw(Constants::EXCEPTION_MSG_INCUT_ATTR_NAME_NOT_FOUND);
         }
@@ -49,10 +50,10 @@ class IncutTemplateGenerator extends AbstractComponent {
                     $node->innertext = $value;
                     break;
                 default:
-                    $node->{$type} = $value;
+                    $node->setAttribute($type, $value);
             }
         }
-        $node->removeAttribute($type);
+        $node->removeAttribute($attrName);
     }
 
     /*
