@@ -98,9 +98,9 @@ class Incut extends AbstractComponent implements Attribute {
          return $this;
      }
 
-     /*
-      * Fillup node with a specific content, making incut interactive, than
-      * */
+    /*
+     * Fillup node with a specific content, making incut interactive, than
+     * */
     private function makeInactive (int $id, string $title) {
          foreach ($this->findById($id) as $node) {
              $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
@@ -109,9 +109,9 @@ class Incut extends AbstractComponent implements Attribute {
          return $this;
      }
 
-     /*
-      * Fillup node with a specific content, making incut deleted, than
-      * */
+    /*
+     * Fillup node with a specific content, making incut deleted, than
+     * */
     private function makeDeleted (int $id) {
          foreach ($this->findById($id) as $node) {
              $node->{Config::get('incut.inactive.attr')} = Config::get('incut.inactive.attrContent');
@@ -120,16 +120,16 @@ class Incut extends AbstractComponent implements Attribute {
          return $this;
      }
 
-     /*
-      * Search for DOM node by attribute tag, attribute and attribute value
-      * */
+    /*
+     * Search for DOM node by attribute tag, attribute and attribute value
+     * */
     private function findById (int $id) {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$id.']');
      }
 
-     /*
-      * Search for DOM node by attribute tag and attribute value
-      * */
+    /*
+     * Search for DOM node by attribute tag and attribute value
+     * */
     private function find () {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').']');
      }
