@@ -5,6 +5,7 @@ use MIR24\Morph\AbstractMorph;
 
 use MIR24\Morph\Components\Incut;
 use MIR24\Morph\Components\Banner;
+use MIR24\Morph\Components\IncutTemplateGenerator;
 
 class Morph extends AbstractMorph {
 
@@ -16,6 +17,12 @@ class Morph extends AbstractMorph {
 
     public function banner () {
         $this->component = new Banner($this->parser);
+
+        return $this;
+    }
+
+    public function incutTemplateGenerator () {
+        $this->component = new IncutTemplateGenerator($this->parser);
 
         return $this;
     }
