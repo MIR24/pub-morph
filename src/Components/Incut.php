@@ -83,6 +83,7 @@ class Incut extends AbstractComponent implements Attribute {
     private function remove(int $id) {
         foreach ($this->findById($id) as $node) {
             $node->outertext = '';
+            $this->removeOldStyles($node);
             $this->removeParentNodeIfEmpty($node);
         }
         return $this;
@@ -93,13 +94,14 @@ class Incut extends AbstractComponent implements Attribute {
      * */
     private function replace(int $id, string $content) {
          foreach ($this->findById($id) as $node) {
-             $node->outertext = $content;
+            $this->removeOldStyles($node);
+            $node->outertext = $content;
          }
          return $this;
-     }
+    }
 
     /*
-     * Fillup node with a specific content, making incut interactive, than
+     * Fillup node with a specific content, making incut interactive.
      * */
     private function makeInactive (int $id, string $title) {
          foreach ($this->findById($id) as $node) {
@@ -107,10 +109,10 @@ class Incut extends AbstractComponent implements Attribute {
              $node->innertext = Config::get('incut.inactive.msg').$title;
          }
          return $this;
-     }
+    }
 
     /*
-     * Fillup node with a specific content, making incut deleted, than
+     * Fillup node with a specific content, making incut deleted.
      * */
     private function makeDeleted (int $id) {
          foreach ($this->findById($id) as $node) {
@@ -118,21 +120,32 @@ class Incut extends AbstractComponent implements Attribute {
              $node->innertext = Config::get('incut.delete.msg');
          }
          return $this;
-     }
+    }
 
     /*
-     * Search for DOM node by attribute tag, attribute and attribute value
+     * Remove preset style tag
+     * */
+    private function removeOldStyles ($node) {
+        $sibling = $node->prev_sibling();
+
+        if ($sibling && $sibling->tag === 'style') {
+            $sibling->outertext = '';
+        }
+    }
+
+    /*
+     * Search for DOM node by attribute tag, attribute and attribute value.
      * */
     private function findById (int $id) {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').'='.$id.']');
-     }
+    }
 
     /*
-     * Search for DOM node by attribute tag and attribute value
+     * Search for DOM node by attribute tag and attribute value.
      * */
     private function find () {
          return $this->parser->find(Config::get('incut.tag').'['. Config::get('incut.attr').']');
-     }
+    }
 
 }
 ?>
