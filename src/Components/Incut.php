@@ -40,7 +40,7 @@ class Incut extends AbstractComponent implements Attribute {
      * */
     private function processFrontend () {
         foreach ($this->processData as $data) {
-            if ($data['active']) {
+            if ($data['active'] && $data['code']) {
                 $this->replace($data['id'], $data['code']);
             } else {
                 $this->remove($data['id']);
@@ -61,7 +61,7 @@ class Incut extends AbstractComponent implements Attribute {
      * */
     private function processBackend () {
         foreach ($this->processData as $data) {
-            if ($data['active']) {
+            if ($data['active'] && $data['code']) {
                 $this->replace($data['id'], $data['code']);
             } else {
                 $this->makeInactive($data['id'], $data['head_text']);
