@@ -29,5 +29,12 @@ abstract class AbstractComponent implements Process {
         $this->processData = $data;
     }
 
+    /*
+     * Implementing interface Process
+     * */
+    public function getExtraProcessData () {
+        return null;
+    }
+
 }
 ?>

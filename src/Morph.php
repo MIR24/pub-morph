@@ -6,6 +6,7 @@ use MIR24\Morph\AbstractMorph;
 use MIR24\Morph\Components\Incut;
 use MIR24\Morph\Components\Banner;
 use MIR24\Morph\Components\IncutTemplateGenerator;
+use MIR24\Morph\Components\Amp;
 
 class Morph extends AbstractMorph {
 
@@ -27,6 +28,12 @@ class Morph extends AbstractMorph {
         return $this;
     }
 
+    public function amp () {
+        $this->component = new Amp($this->parser);
+
+        return $this;
+    }
+
     public function process () {
         $this->component->process();
 
@@ -43,6 +50,10 @@ class Morph extends AbstractMorph {
         $this->component->setProcessData($data);
 
         return $this;
+    }
+
+    public function getExtraProcessData () {
+        return $this->component->getExtraProcessData();
     }
 
     public function getAttributeValues ($type = NULL) {
