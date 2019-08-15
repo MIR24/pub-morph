@@ -71,10 +71,11 @@ class Incut extends AbstractComponent implements Attribute {
                     $inactiveText = Config::get('incut.inactive.msg');
                 }
 
-                $inactiveText .= Constants::_TRANSLATION_FIELDS_FOR_ERROR;
-
-                foreach ($data['fields'] as $field) {
-                    $inactiveText .= ' '.$field['name']['value'].': '.$field['value'].',';
+                if (array_key_exists('fields', $data)) {
+                    $inactiveText .= Constants::_TRANSLATION_FIELDS_FOR_ERROR;
+                    foreach ($data['fields'] as $field) {
+                        $inactiveText .= ' '.$field['name']['value'].': '.$field['value'].',';
+                    }
                 }
 
                 $this->makeInactive($data['id'], rtrim($inactiveText, ','));
