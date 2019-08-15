@@ -12,11 +12,14 @@ return [
         'inactive' => [
             'attr' => 'style',
             'attrContent' => 'display:none;',
-            'msg' => 'НЕАКТИВНАЯ ВРЕЗКА ЗАГОЛОВОК: '
+            'msg' => 'НЕАКТИВНАЯ ВРЕЗКА'
         ],
         'delete' => [
             'msg' => 'УДАЛЕНА ВРЕЗКА'
-        ]
+        ],
+        'noTemplate' => [
+            'msg' => 'ТЕМПЛЕЙТ ВРЕЗКИ НЕ СУЩЕСТВУЕТ'
+        ],
     ],
     'ingrid' => [
         'strlen-pass' => 1200,
