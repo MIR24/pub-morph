@@ -74,7 +74,7 @@ class Incut extends AbstractComponent implements Attribute {
                 $inactiveText .= Constants::_TRANSLATION_FIELDS_FOR_ERROR;
 
                 foreach ($data['fields'] as $field) {
-                    $inactiveText .= ' '.$field['name'].': '.$field['value'].',';
+                    $inactiveText .= ' '.$field['name']['value'].': '.$field['value'].',';
                 }
 
                 $this->makeInactive($data['id'], rtrim($inactiveText, ','));
