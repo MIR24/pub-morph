@@ -8,6 +8,8 @@ use MIR24\Morph\Helpers\LightboxHelper;
 
 use MIR24\Morph\Config\Config;
 
+use MIR24\Morph\Traits\DomHelper;
+
 class Image extends AbstractComponent implements Attribute {
 
     use DomHelper;
@@ -47,9 +49,24 @@ class Image extends AbstractComponent implements Attribute {
      * Processing default type
      * */
     private function processDefault () {
-        foreach($this->parser->find('img') as $node) {
+        foreach ($this->processData as $data) {
+            if ($data['lightboxSrc']) {
+                if ($data['id']) {
+                    $this->replaceDefault($this->findByAttrTypeAndContent(Config::get('image.attrImageIdName'), $data['id']), $data['lightboxSrc']);
+                } else if ($data['src']) {
+                    $this->replaceDefault($this->findByAttrTypeAndContent('src', $data['id']), $data['lightboxSrc']);
+                }
+            }
+        }
+    }
+
+    /*
+     * Replacing image html content
+     * */
+    private function replaceDefault ($nodes, $lightboxSrc) {
+        foreach($nodes as $node) {
             if ($this->isProcessAllowed($node)) {
-                $node->outertext = LightboxHelper::process($node->src, $node->src, '', $node->outertext);
+                $node->outertext = LightboxHelper::process($lightboxSrc, $lightboxSrc, '', $node->outertext);
             }
         }
     }
@@ -58,7 +75,7 @@ class Image extends AbstractComponent implements Attribute {
      * Processing amp type
      * */
     private function processAmp () {
-        foreach($this->parser->find('img') as $node) {
+        foreach($this->find() as $node) {
             if ($this->isProcessAllowed($node)) {
                 $config_match = null;
                 $ampImg = Config::get('image.amp.exit_tag');
@@ -106,14 +123,21 @@ class Image extends AbstractComponent implements Attribute {
     }
 
     /*
-     * Search for DOM node by attribute tag and attribute value.
+     * Search for DOM node by attribute tag.
      * */
     private function find () {
         return $this->parser->find('img');
     }
 
     /*
-     * Check if image tag is allowed for change
+     * Search for DOM node by attribute tag and attribute value.
+     * */
+    private function findByAttrTypeAndContent ($type, $content) {
+        return $this->parser->find('img['.$type.'='.$content.']');
+    }
+
+    /*
+     * Check if image tag is allowed for change.
      * */
     private function isProcessAllowed ($node) {
         $parent = $node->parent();
