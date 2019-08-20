@@ -4,8 +4,6 @@ namespace MIR24\Morph\Components;
 use MIR24\Morph\Components\AbstractComponent;
 
 use MIR24\Morph\Config\Config;
-use MIR24\Morph\Config\Constants;
-use MIR24\Morph\Exception\Exception;
 
 class Amp extends AbstractComponent {
 
