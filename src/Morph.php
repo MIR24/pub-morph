@@ -7,6 +7,7 @@ use MIR24\Morph\Components\Incut;
 use MIR24\Morph\Components\Banner;
 use MIR24\Morph\Components\IncutTemplateGenerator;
 use MIR24\Morph\Components\Amp;
+use MIR24\Morph\Components\Image;
 
 class Morph extends AbstractMorph {
 
@@ -30,6 +31,12 @@ class Morph extends AbstractMorph {
 
     public function amp () {
         $this->component = new Amp($this->parser);
+
+        return $this;
+    }
+
+    public function image () {
+        $this->component = new Image($this->parser);
 
         return $this;
     }
