@@ -110,7 +110,8 @@ class IncutTemplateGenerator extends AbstractComponent {
                 }
 
             }
-            $node->removeAttribute($attrTypeValue);
+
+            $node->removeAttribute($attrTypeKey);
         }
     }
 
