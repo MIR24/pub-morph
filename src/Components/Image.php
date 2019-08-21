@@ -115,7 +115,7 @@ class Image extends AbstractComponent implements Attribute {
                 $imgSrc= 'https:' . substr($imgSrc, $httpsSwitch, -1);
             }
 
-            $ampImg = str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg);
+            $ampImg = $this->wrapInFigure(str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg), $node->getAttribute(Config::get('image.attrImageCaptionName')));
             $node->parent->innertext = $ampImg;
             continue;
         }
