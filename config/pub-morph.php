@@ -137,27 +137,30 @@ return [
                 'header_include' => '<script async custom-element="amp-apester-media" src="https://cdn.ampproject.org/v0/amp-apester-media-0.1.js"></script>',
                 'header_include_match' => 'amp-apester-media',
             ],
-            [
-                'type' => 'img',
-                'exit_tag' => '<amp-img
-                                    layout="responsive"
-                                    height="{height}"
-                                    width="{width}"
-                                    src="{src}">
-                                </amp-img>',
-                'style' => [
-                    'height' => '#height:(.*?)([;|,|\s]|$)#',
-                    'width' => '#width:(.*?)([;|,|\s]|$)#',
-                ],
-                'replace' => [
-                    'height' => '{height}',
-                    'width' => '{width}',
-                    'src' => '{src}',
-                ],
-                'default' => [
-                    'height' => '1',
-                    'width' => '1.5',
-                ],
+        ],
+    ],
+    'image' => [
+        'attrImageIdName' => 'data-attribute-mir24-image-id',
+        'amp' => [
+            'type' => 'img',
+            'exit_tag' => '<amp-img
+                                layout="responsive"
+                                height="{height}"
+                                width="{width}"
+                                src="{src}">
+                            </amp-img>',
+            'style' => [
+                'height' => '#height:(.*?)([;|,|\s]|$)#',
+                'width' => '#width:(.*?)([;|,|\s]|$)#',
+            ],
+            'replace' => [
+                'height' => '{height}',
+                'width' => '{width}',
+                'src' => '{src}',
+            ],
+            'default' => [
+                'height' => '1',
+                'width' => '1.5',
             ],
         ],
     ],

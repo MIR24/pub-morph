@@ -4,8 +4,6 @@ namespace MIR24\Morph\Components;
 use MIR24\Morph\Components\AbstractComponent;
 
 use MIR24\Morph\Config\Config;
-use MIR24\Morph\Config\Constants;
-use MIR24\Morph\Exception\Exception;
 
 class Amp extends AbstractComponent {
 
@@ -18,42 +16,6 @@ class Amp extends AbstractComponent {
         foreach (Config::get('amp.blocks') as $one) {
             foreach ($this->parser->find($one['type']) as $element) {
                 $config_match = null;
-                if ($one['type'] == 'img') {
-                    $ampImg = $one['exit_tag'];
-                    $imgHeight = $element->height;
-                    if (!$imgHeight) {
-                        preg_match($one['style']['height'], $element->getAttribute('style'), $config_match);
-                        if ($config_match && $config_match[1] !== 'auto') {
-                            $imgHeight = $config_match[1];
-                        }
-                    }
-                    $imgWidth = $element->width;
-                    if (!$imgWidth) {
-                        preg_match($one['style']['width'], $element->getAttribute('style'), $config_match);
-                        if ($config_match && $config_match[1] !== 'auto') {
-                            $imgWidth = $config_match[1];
-                        }
-                    }
-                    if (!$imgWidth || !$imgHeight) {
-                        $ampImg = str_replace($one['replace']['height'], $one['default']['height'], $ampImg);
-                        $ampImg = str_replace($one['replace']['width'], $one['default']['width'], $ampImg);
-                    } else {
-                        $ampImg = str_replace($one['replace']['height'], $imgHeight, $ampImg);
-                        $ampImg = str_replace($one['replace']['width'], $imgWidth, $ampImg);
-                    }
-                    $imgSrc = $element->src;
-                    if (!$imgSrc) {
-                        $element->parent->innertext = '';
-                        continue;
-                    }
-                    $httpsSwitch = strpos($imgSrc, 'http:');
-                    if ($httpsSwitch) {
-                        $imgSrc= 'https:' . substr($imgSrc, $httpsSwitch, -1);
-                    }
-                    $ampImg = str_replace($one['replace']['src'], $imgSrc, $ampImg);
-                    $element->parent->innertext = $ampImg;
-                    continue;
-                }
                 if (array_key_exists('regex_match_href', $one)) {
                     foreach ($element->find('a') as $a_teg) {
                         if (preg_match($one['regex_match_href'], $a_teg->href, $config_match)) {
