@@ -21,6 +21,11 @@ return [
             'msg' => 'ТЕМПЛЕЙТ ВРЕЗКИ НЕ СУЩЕСТВУЕТ'
         ],
     ],
+    'incutTemplate' => [
+        'additionalAttrTypes' => [
+            'data-attribute-mir24-lightbox-root' => 'data-attribute-mir24-lightbox-image',
+        ]
+    ],
     'ingrid' => [
         'strlen-pass' => 1200,
         'after-chars-article' => 1200,
