@@ -66,7 +66,8 @@ class Image extends AbstractComponent implements Attribute {
     private function replaceDefault ($nodes, $lightboxSrc) {
         foreach($nodes as $node) {
             if ($this->isProcessAllowed($node)) {
-                $node->outertext = LightboxHelper::process($lightboxSrc, $lightboxSrc, '', $node->outertext);
+                $caption = $node->getAttribute(Config::get('image.attrImageCaptionName'));
+                $node->outertext = $this->wrapInFigure(LightboxHelper::process($lightboxSrc, $lightboxSrc, $caption, $node->outertext), $caption);
             }
         }
     }
@@ -143,6 +144,17 @@ class Image extends AbstractComponent implements Attribute {
             return true;
         }
         return false;
+    }
+
+    /*
+     * Warp with figure html tag.
+     * */
+    private function wrapInFigure ($content, $caption = NULL) {
+        if ($caption) {
+            $caption = '<figcaption>'.$caption.'</figcaption>';
+        }
+
+        return '<figure>'.$content.$caption.'</figure>';
     }
 
 }
