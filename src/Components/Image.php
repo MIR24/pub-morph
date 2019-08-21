@@ -54,7 +54,7 @@ class Image extends AbstractComponent implements Attribute {
                 if ($data['id']) {
                     $this->replaceDefault($this->findByAttrTypeAndContent(Config::get('image.attrImageIdName'), $data['id']), $data['lightboxSrc']);
                 } else if ($data['src']) {
-                    $this->replaceDefault($this->findByAttrTypeAndContent('src', $data['id']), $data['lightboxSrc']);
+                    $this->replaceDefault($this->findByAttrTypeAndContent('src', $data['src']), $data['lightboxSrc']);
                 }
             }
         }
@@ -76,49 +76,47 @@ class Image extends AbstractComponent implements Attribute {
      * */
     private function processAmp () {
         foreach($this->find() as $node) {
-            if ($this->isProcessAllowed($node)) {
-                $config_match = null;
-                $ampImg = Config::get('image.amp.exit_tag');
+            $config_match = null;
+            $ampImg = Config::get('image.amp.exit_tag');
 
-                $imgHeight = $node->height;
-                if (!$imgHeight) {
-                    preg_match(Config::get('image.amp.style.height'), $node->getAttribute('style'), $config_match);
-                    if ($config_match && $config_match[1] !== 'auto') {
-                        $imgHeight = $config_match[1];
-                    }
+            $imgHeight = $node->height;
+            if (!$imgHeight) {
+                preg_match(Config::get('image.amp.style.height'), $node->getAttribute('style'), $config_match);
+                if ($config_match && $config_match[1] !== 'auto') {
+                    $imgHeight = $config_match[1];
                 }
+            }
 
-                $imgWidth = $node->width;
-                if (!$imgWidth) {
-                    preg_match(Config::get('image.amp.style.width'), $node->getAttribute('style'), $config_match);
-                    if ($config_match && $config_match[1] !== 'auto') {
-                        $imgWidth = $config_match[1];
-                    }
+            $imgWidth = $node->width;
+            if (!$imgWidth) {
+                preg_match(Config::get('image.amp.style.width'), $node->getAttribute('style'), $config_match);
+                if ($config_match && $config_match[1] !== 'auto') {
+                    $imgWidth = $config_match[1];
                 }
+            }
 
-                if (!$imgWidth || !$imgHeight) {
-                    $ampImg = str_replace(Config::get('image.amp.replace.height'), Config::get('image.amp.default.height'), $ampImg);
-                    $ampImg = str_replace(Config::get('image.amp.replace.width'), Config::get('image.amp.default.width'), $ampImg);
-                } else {
-                    $ampImg = str_replace(Config::get('image.amp.replace.height'), $imgHeight, $ampImg);
-                    $ampImg = str_replace(Config::get('image.amp.replace.width'), $imgWidth, $ampImg);
-                }
+            if (!$imgWidth || !$imgHeight) {
+                $ampImg = str_replace(Config::get('image.amp.replace.height'), Config::get('image.amp.default.height'), $ampImg);
+                $ampImg = str_replace(Config::get('image.amp.replace.width'), Config::get('image.amp.default.width'), $ampImg);
+            } else {
+                $ampImg = str_replace(Config::get('image.amp.replace.height'), $imgHeight, $ampImg);
+                $ampImg = str_replace(Config::get('image.amp.replace.width'), $imgWidth, $ampImg);
+            }
 
-                $imgSrc = $node->src;
-                if (!$imgSrc) {
-                    $node->parent->innertext = '';
-                    continue;
-                }
-
-                $httpsSwitch = strpos($imgSrc, 'http:');
-                if ($httpsSwitch) {
-                    $imgSrc= 'https:' . substr($imgSrc, $httpsSwitch, -1);
-                }
-
-                $ampImg = str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg);
-                $node->parent->innertext = $ampImg;
+            $imgSrc = $node->src;
+            if (!$imgSrc) {
+                $node->parent->innertext = '';
                 continue;
             }
+
+            $httpsSwitch = strpos($imgSrc, 'http:');
+            if ($httpsSwitch) {
+                $imgSrc= 'https:' . substr($imgSrc, $httpsSwitch, -1);
+            }
+
+            $ampImg = str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg);
+            $node->parent->innertext = $ampImg;
+            continue;
         }
     }
 
