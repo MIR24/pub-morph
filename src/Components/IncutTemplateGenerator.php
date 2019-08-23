@@ -71,9 +71,11 @@ class IncutTemplateGenerator extends AbstractComponent {
         foreach ($this->findByAttributeName($dataAttrName) as $node) {
             if ($node->hasAttribute($dataAttrPatternName)) {
                 $replacementValue = preg_replace_callback($regexPattern, function ($match) {
-                    switch ($match[1]) {
-                        case 'uniqueId':
-                            return $this->getUniqueId();
+                    if (array_key_exists(2, $match)) {
+                        switch ($match[2]) {
+                            case 'uniqueId':
+                                return $this->getUniqueId();
+                        }
                     }
                 }, $node->getAttribute($dataAttrPatternName));
 
