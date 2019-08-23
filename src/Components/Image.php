@@ -20,7 +20,15 @@ class Image extends AbstractComponent implements Attribute {
     public function getAttributeValues ($type = NULL) {
         $result = [];
 
-        foreach ($this->find() as $node) {
+        switch ($this->processType) {
+            case 'amp':
+                $nodes = $this->findForProcess();
+                break;
+            default:
+                $nodes = $this->find();
+        }
+
+        foreach ($nodes as $node) {
             if ($this->isProcessAllowed($node)) {
                 $result[] = [
                     'id' => $node->getAttribute(Config::get('image.attrImageIdName')),
@@ -118,6 +126,26 @@ class Image extends AbstractComponent implements Attribute {
             $node->parent->innertext = $ampImg;
             continue;
         }
+
+        $imageProcessByAttrName = Config::get('image.processByAttribute');
+        foreach ($this->processData as $data) {
+            foreach ($this->findByAttrTypeAndContent('src', $data['src']) as $imageNode) {
+                $type = $imageNode->getAttribute($imageProcessByAttrName);
+                $imageNode->removeAttribute($imageProcessByAttrName);
+
+                switch ($type) {
+                    case 'size':
+                        if (array_key_exists('width', $data) && array_key_exists('height', $data)) {
+                            $imageNode->setAttribute('width', $data['width']);
+                            $imageNode->setAttribute('height', $data['height']);
+                        } else {
+                            $imageNode->outertext = '';
+                        }
+                        break;
+                }
+            }
+        }
+
     }
 
     /*
@@ -125,6 +153,13 @@ class Image extends AbstractComponent implements Attribute {
      * */
     private function find () {
         return $this->parser->find('img');
+    }
+
+    /*
+     * Search for DOM node marked for change.
+     * */
+    private function findForProcess () {
+        return $this->parser->find('img['.Config::get('image.processByAttribute').']');
     }
 
     /*

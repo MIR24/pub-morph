@@ -64,6 +64,9 @@ return [
             'onclick',
             'onmouseover',
         ],
+        'add_header_scripts_by_tag_name' => [
+            'amp-lightbox' => '<script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>',
+        ],
         'blocks' => [
             [
                 'type' => 'iframe',
@@ -169,6 +172,7 @@ return [
                 'width' => '1.5',
             ],
         ],
+        'processByAttribute' => 'data-attribute-image-process',
     ],
 ];
 ?>
