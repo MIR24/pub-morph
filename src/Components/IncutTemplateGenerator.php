@@ -2,7 +2,6 @@
 namespace MIR24\Morph\Components;
 
 use MIR24\Morph\Components\AbstractComponent;
-use MIR24\Morph\Helpers\LightboxHelper;
 
 use MIR24\Morph\Config\Config;
 use MIR24\Morph\Config\Constants;
@@ -14,29 +13,12 @@ class IncutTemplateGenerator extends AbstractComponent {
      * Implementing interface Process
      * */
     public function process () {
-        switch ($this->processType) {
-            case 'backend':
-                $this->processBackend();
-                break;
-            case 'fontend':
-            default:
-                $this->processFrontend();
+        $this->processRootNodeIdAttribute();
+        foreach ($this->processData['fields'] as $data) {
+            foreach ($this->findByAttributeName($data['data_attr']['value']) as $node) {
+                $this->processAttributeByType($node, $data['data_attr']['value'], $data['value']);
+            }
         }
-    }
-
-    /*
-     * Processing backend type
-     * */
-    private function processFrontend () {
-        $this->processTemplateBaseLogic();
-        $this->processAdditionalAttributeByType();
-    }
-
-    /*
-     * Processing frontend type
-     * */
-    private function processBackend () {
-        $this->processTemplateBaseLogic();
     }
 
     /*
@@ -67,6 +49,9 @@ class IncutTemplateGenerator extends AbstractComponent {
                 case 'content':
                     $node->innertext = $value;
                     break;
+                case 'uniqueId':
+                    $node->setAttribute($type, $this->getUniqueId());
+                    break;
                 default:
                     $node->setAttribute($type, $value);
             }
@@ -75,44 +60,10 @@ class IncutTemplateGenerator extends AbstractComponent {
     }
 
     /*
-     * Base processing logic
+     * Create unique identifier.
      * */
-    private function processTemplateBaseLogic () {
-        $this->processRootNodeIdAttribute();
-        foreach ($this->processData['fields'] as $data) {
-            foreach ($this->findByAttributeName($data['data_attr']['value']) as $node) {
-                $this->processAttributeByType($node, $data['data_attr']['value'], $data['value']);
-            }
-        }
-    }
-
-    /*
-     * Process additional data attributes and insert the values
-     * */
-    private function processAdditionalAttributeByType () {
-        foreach (Config::get('incutTemplate.additionalAttrTypes') as $attrTypeKey => $attrTypeValue) {
-            foreach ($this->findByAttributeName($attrTypeKey) as $node) {
-                $tempValue = null;
-
-                foreach ($this->processData['fields'] as $data) {
-                    if ($data['data_attr']['value'] === $attrTypeValue) {
-                        $tempValue = $data['value'];
-                        break;
-                    }
-                }
-
-                if ($tempValue) {
-                    switch ($attrTypeKey) {
-                        case 'data-attribute-mir24-lightbox-root':
-                            $node->outertext = LightboxHelper::process($tempValue, $tempValue, '', $node->outertext);
-                            break;
-                    }
-                }
-
-            }
-
-            $node->removeAttribute($attrTypeKey);
-        }
+    private function getUniqueId () {
+        return Config::get('incut.uniquePrefix').$this->processData['id'];
     }
 
     /*
