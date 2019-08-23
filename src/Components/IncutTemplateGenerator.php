@@ -19,6 +19,7 @@ class IncutTemplateGenerator extends AbstractComponent {
                 $this->processAttributeByType($node, $data['data_attr']['value'], $data['value']);
             }
         }
+        $this->processReplacePattern();
     }
 
     /*
@@ -41,7 +42,7 @@ class IncutTemplateGenerator extends AbstractComponent {
     private function processAttributeByType ($node, $attrName, $value) {
         $type = $node->{$attrName};
         if (!$type) {
-            Exception::throw(Constants::EXCEPTION_MSG_INCUT_ATTR_NAME_NOT_FOUND);
+            Exception::throw(Constants::EXCEPTION_MSG_INCUT_ATTR_NAME_NOT_FOUND.$attrName);
         }
 
         if ($value) {
@@ -57,6 +58,30 @@ class IncutTemplateGenerator extends AbstractComponent {
             }
         }
         $node->removeAttribute($attrName);
+    }
+
+    /*
+     * Process data attributes replace pattern and insert the values
+     * */
+    private function processReplacePattern () {
+        $dataAttrName = Config::get('incutTemplate.dataAttrName');
+        $dataAttrPatternName = Config::get('incutTemplate.dataAttrPatternName');
+        $regexPattern = Config::get('incutTemplate.regex_extract_pattern');
+
+        foreach ($this->findByAttributeName($dataAttrName) as $node) {
+            if ($node->hasAttribute($dataAttrPatternName)) {
+                $replacementValue = preg_replace_callback($regexPattern, function ($match) {
+                    switch ($match[1]) {
+                        case 'uniqueId':
+                            return $this->getUniqueId();
+                    }
+                }, $node->getAttribute($dataAttrPatternName));
+
+                $node->setAttribute($node->getAttribute($dataAttrName), $replacementValue);
+            }
+            $node->removeAttribute($dataAttrName);
+            $node->removeAttribute($dataAttrPatternName);
+        }
     }
 
     /*

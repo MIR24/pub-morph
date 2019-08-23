@@ -22,6 +22,11 @@ return [
         ],
         'uniquePrefix' => 'uniq-mir24-incut-',
     ],
+    'incutTemplate' => [
+        'regex_extract_pattern' => '#({(.*)})#',
+        'dataAttrName' => 'data-attribute-replace',
+        'dataAttrPatternName' => 'data-attribute-replace-pattern',
+    ],
     'ingrid' => [
         'strlen-pass' => 1200,
         'after-chars-article' => 1200,
