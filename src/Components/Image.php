@@ -129,7 +129,7 @@ class Image extends AbstractComponent implements Attribute {
 
         $imageProcessByAttrName = Config::get('image.processByAttribute');
         foreach ($this->processData as $data) {
-            foreach ($this->findByAttrTypeAndContent('src', $data['src']) as $imageNode) {
+            foreach ($this->findAmpImageByAttrTypeAndContent('src', $data['src']) as $imageNode) {
                 $type = $imageNode->getAttribute($imageProcessByAttrName);
                 $imageNode->removeAttribute($imageProcessByAttrName);
 
@@ -159,7 +159,7 @@ class Image extends AbstractComponent implements Attribute {
      * Search for DOM node marked for change.
      * */
     private function findForProcess () {
-        return $this->parser->find('img['.Config::get('image.processByAttribute').']');
+        return $this->parser->find('*['.Config::get('image.processByAttribute').']');
     }
 
     /*
@@ -167,6 +167,13 @@ class Image extends AbstractComponent implements Attribute {
      * */
     private function findByAttrTypeAndContent ($type, $content) {
         return $this->parser->find('img['.$type.'='.$content.']');
+    }
+
+    /*
+     * Search for DOM node by attribute tag and attribute value.
+     * */
+    private function findAmpImageByAttrTypeAndContent ($type, $content) {
+        return $this->parser->find('amp-img['.$type.'='.$content.']');
     }
 
     /*
