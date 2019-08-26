@@ -2,7 +2,6 @@
 namespace MIR24\Morph\Components;
 
 use MIR24\Morph\Components\AbstractComponent;
-use MIR24\Morph\Helpers\LightboxHelper;
 
 use MIR24\Morph\Config\Config;
 use MIR24\Morph\Config\Constants;
@@ -14,29 +13,13 @@ class IncutTemplateGenerator extends AbstractComponent {
      * Implementing interface Process
      * */
     public function process () {
-        switch ($this->processType) {
-            case 'backend':
-                $this->processBackend();
-                break;
-            case 'fontend':
-            default:
-                $this->processFrontend();
+        $this->processRootNodeIdAttribute();
+        foreach ($this->processData['fields'] as $data) {
+            foreach ($this->findByAttributeName($data['data_attr']['value']) as $node) {
+                $this->processAttributeByType($node, $data['data_attr']['value'], $data['value']);
+            }
         }
-    }
-
-    /*
-     * Processing backend type
-     * */
-    private function processFrontend () {
-        $this->processTemplateBaseLogic();
-        $this->processAdditionalAttributeByType();
-    }
-
-    /*
-     * Processing frontend type
-     * */
-    private function processBackend () {
-        $this->processTemplateBaseLogic();
+        $this->processReplacePattern();
     }
 
     /*
@@ -59,13 +42,16 @@ class IncutTemplateGenerator extends AbstractComponent {
     private function processAttributeByType ($node, $attrName, $value) {
         $type = $node->{$attrName};
         if (!$type) {
-            Exception::throw(Constants::EXCEPTION_MSG_INCUT_ATTR_NAME_NOT_FOUND);
+            Exception::throw(Constants::EXCEPTION_MSG_INCUT_ATTR_NAME_NOT_FOUND.$attrName);
         }
 
         if ($value) {
             switch ($type) {
                 case 'content':
                     $node->innertext = $value;
+                    break;
+                case 'uniqueId':
+                    $node->setAttribute($type, $this->getUniqueId());
                     break;
                 default:
                     $node->setAttribute($type, $value);
@@ -75,44 +61,36 @@ class IncutTemplateGenerator extends AbstractComponent {
     }
 
     /*
-     * Base processing logic
+     * Process data attributes replace pattern and insert the values
      * */
-    private function processTemplateBaseLogic () {
-        $this->processRootNodeIdAttribute();
-        foreach ($this->processData['fields'] as $data) {
-            foreach ($this->findByAttributeName($data['data_attr']['value']) as $node) {
-                $this->processAttributeByType($node, $data['data_attr']['value'], $data['value']);
+    private function processReplacePattern () {
+        $dataAttrName = Config::get('incutTemplate.dataAttrName');
+        $dataAttrPatternName = Config::get('incutTemplate.dataAttrPatternName');
+        $regexPattern = Config::get('incutTemplate.regex_extract_pattern');
+
+        foreach ($this->findByAttributeName($dataAttrName) as $node) {
+            if ($node->hasAttribute($dataAttrPatternName)) {
+                $replacementValue = preg_replace_callback($regexPattern, function ($match) {
+                    if (array_key_exists(2, $match)) {
+                        switch ($match[2]) {
+                            case 'uniqueId':
+                                return $this->getUniqueId();
+                        }
+                    }
+                }, $node->getAttribute($dataAttrPatternName));
+
+                $node->setAttribute($node->getAttribute($dataAttrName), $replacementValue);
             }
+            $node->removeAttribute($dataAttrName);
+            $node->removeAttribute($dataAttrPatternName);
         }
     }
 
     /*
-     * Process additional data attributes and insert the values
+     * Create unique identifier.
      * */
-    private function processAdditionalAttributeByType () {
-        foreach (Config::get('incutTemplate.additionalAttrTypes') as $attrTypeKey => $attrTypeValue) {
-            foreach ($this->findByAttributeName($attrTypeKey) as $node) {
-                $tempValue = null;
-
-                foreach ($this->processData['fields'] as $data) {
-                    if ($data['data_attr']['value'] === $attrTypeValue) {
-                        $tempValue = $data['value'];
-                        break;
-                    }
-                }
-
-                if ($tempValue) {
-                    switch ($attrTypeKey) {
-                        case 'data-attribute-mir24-lightbox-root':
-                            $node->outertext = LightboxHelper::process($tempValue, $tempValue, '', $node->outertext);
-                            break;
-                    }
-                }
-
-            }
-
-            $node->removeAttribute($attrTypeKey);
-        }
+    private function getUniqueId () {
+        return Config::get('incut.uniquePrefix').$this->processData['id'];
     }
 
     /*

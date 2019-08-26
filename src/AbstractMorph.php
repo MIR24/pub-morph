@@ -1,17 +1,27 @@
 <?php
 namespace MIR24\Morph;
 
+use MIR24\Morph\Interfaces\DomParser\GetDomData;
+
 use Sunra\PhpSimple\HtmlDomParser;
+
+use MIR24\Morph\Config\Constants;
 
 use MIR24\Morph\Helpers\BracketsHelper;
 
-abstract class AbstractMorph
+use MIR24\Morph\Components\Incut;
+use MIR24\Morph\Components\Banner;
+use MIR24\Morph\Components\IncutTemplateGenerator;
+use MIR24\Morph\Components\Amp;
+use MIR24\Morph\Components\Image;
+
+abstract class AbstractMorph implements GetDomData
 {
     protected $parser;
     protected $component;
 
     function __construct ($publicationSource) {
-        $this->parser = HtmlDomParser::str_get_html($this->processLoadingHtmlString($publicationSource));
+        $this->loadParser($publicationSource);
 
         return $this;
     }
@@ -21,23 +31,36 @@ abstract class AbstractMorph
     }
 
     /*
-     * Helper function for processing html string before loading
+     * Setting parser for use
      * */
-    private function processLoadingHtmlString ($str) {
-        return BracketsHelper::load($str);
+    private function loadParser ($str) {
+        $this->parser = HtmlDomParser::str_get_html(BracketsHelper::load($str));
     }
 
     /*
-     * Clear memory and load new string
+     * Helper function, loading component for use
      * */
-    public function setHtmlString ($str) {
-        $this->parser->load($this->processLoadingHtmlString($str));
+    protected function loadComponent ($className) {
+        $this->updateParser();
+        $className = Constants::COMPONENTS_LOCATION . $className;
+        $this->component = new $className ($this->parser);
     }
 
     /*
-     * Returns html string, depending of decoding attribute
+     * Updating parser data, after component processing
+     * */
+    private function updateParser () {
+        if ($this->component) {
+            $this->loadParser($this->component->getHtmlString());
+        }
+    }
+
+    /*
+     * Implementing interface GetDomData
      * */
     public function getHtmlString () {
+        $this->updateParser();
+
         return BracketsHelper::unload($this->parser->save());
     }
 

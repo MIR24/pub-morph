@@ -20,11 +20,12 @@ return [
         'noTemplate' => [
             'msg' => 'ТЕМПЛЕЙТ ВРЕЗКИ НЕ СУЩЕСТВУЕТ'
         ],
+        'uniquePrefix' => 'uniq-mir24-incut-',
     ],
     'incutTemplate' => [
-        'additionalAttrTypes' => [
-            'data-attribute-mir24-lightbox-root' => 'data-attribute-mir24-lightbox-image',
-        ]
+        'regex_extract_pattern' => '#({(.*)})#',
+        'dataAttrName' => 'data-attribute-replace',
+        'dataAttrPatternName' => 'data-attribute-replace-pattern',
     ],
     'ingrid' => [
         'strlen-pass' => 1200,
@@ -62,6 +63,9 @@ return [
             'style',
             'onclick',
             'onmouseover',
+        ],
+        'add_header_scripts_by_tag_name' => [
+            'amp-lightbox' => '<script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>',
         ],
         'blocks' => [
             [
@@ -168,6 +172,7 @@ return [
                 'width' => '1.5',
             ],
         ],
+        'processByAttribute' => 'data-attribute-image-process',
     ],
 ];
 ?>
