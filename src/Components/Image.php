@@ -181,7 +181,7 @@ class Image extends AbstractComponent implements Attribute {
      * */
     private function isProcessAllowed ($node) {
         $parent = $node->parent();
-        if ($parent && $parent->tag === 'p') {
+        if ($parent && $parent->tag === 'p' || $node->tag === 'amp-img') {
             return true;
         }
         return false;
