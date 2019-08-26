@@ -10,7 +10,7 @@ abstract class AbstractComponent implements Process {
     protected $processData = NULL;
 
     function __construct(&$parser) {
-        $this->parser = $parser;
+        $this->parser = &$parser;
 
         return $this;
     }

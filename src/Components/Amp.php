@@ -62,7 +62,7 @@ class Amp extends AbstractComponent {
         }
 
         foreach (Config::get('amp.add_header_scripts_by_tag_name') as $tagName => $tagScript) {
-            $nodes = $this->parser->find($tagName);
+            $nodes = $this->parser->find('*['. $tagName .']');
             if ($nodes) {
                 $this->addAmpExtraHeader($tagScript, $tagName);
             }
