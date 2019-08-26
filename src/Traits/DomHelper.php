@@ -15,10 +15,10 @@ trait DomHelper {
     }
 
     /*
-     * Returns nodes attribute values or NULL
+     * Returns nodes attribute values
      * */
     private function getNodesAttributeValues ($nodes, $attr) {
-        $result = NULL;
+        $result = [];
         foreach ($nodes as $node) {
             $result[] = $node->{$attr};
         }

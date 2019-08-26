@@ -3,40 +3,34 @@ namespace MIR24\Morph;
 
 use MIR24\Morph\AbstractMorph;
 
-use MIR24\Morph\Components\Incut;
-use MIR24\Morph\Components\Banner;
-use MIR24\Morph\Components\IncutTemplateGenerator;
-use MIR24\Morph\Components\Amp;
-use MIR24\Morph\Components\Image;
-
 class Morph extends AbstractMorph {
 
     public function incut () {
-        $this->component = new Incut($this->parser);
+        $this->loadComponent('Incut');
 
         return $this;
     }
 
     public function banner () {
-        $this->component = new Banner($this->parser);
+        $this->loadComponent('Banner');
 
         return $this;
     }
 
     public function incutTemplateGenerator () {
-        $this->component = new IncutTemplateGenerator($this->parser);
+        $this->loadComponent('IncutTemplateGenerator');
 
         return $this;
     }
 
     public function amp () {
-        $this->component = new Amp($this->parser);
+        $this->loadComponent('Amp');
 
         return $this;
     }
 
     public function image () {
-        $this->component = new Image($this->parser);
+        $this->loadComponent('Image');
 
         return $this;
     }

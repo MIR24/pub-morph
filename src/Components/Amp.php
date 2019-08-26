@@ -30,9 +30,7 @@ class Amp extends AbstractComponent {
                     $config_match = $element->getAttribute($one['div_attribute']);
                 }
                 if ($config_match) {
-                    if (strlen($one['header_include']) > 0 && !strpos($this->headerIncludes, $one['header_include_match'])) {
-                        $this->headerIncludes .= $one['header_include'];
-                    }
+                    $this->addAmpExtraHeader($one['header_include'], $one['header_include_match']);
                     if (is_array($config_match)) {
                         $element->parent->innertext = preg_replace(Config::get('amp.regex_match_brackets'), $config_match[1], $one['exit_tag']);
                     } else {
@@ -63,6 +61,22 @@ class Amp extends AbstractComponent {
             }
         }
 
+        foreach (Config::get('amp.add_header_scripts_by_tag_name') as $tagName => $tagScript) {
+            $nodes = $this->parser->find($tagName);
+            if ($nodes) {
+                $this->addAmpExtraHeader($tagScript, $tagName);
+            }
+        }
+
+    }
+
+    /*
+     * Helper function for adding additional amp headers
+     * */
+    private function addAmpExtraHeader ($header, $search) {
+        if (strlen($header) > 0 && !strpos($this->headerIncludes, $search)) {
+            $this->headerIncludes .= $header;
+        }
     }
 
     /*
