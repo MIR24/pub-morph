@@ -2,8 +2,9 @@
 namespace MIR24\Morph\Components;
 
 use MIR24\Morph\Interfaces\Components\Process;
+use MIR24\Morph\Interfaces\DomParser\GetDomData;
 
-abstract class AbstractComponent implements Process {
+abstract class AbstractComponent implements Process, GetDomData {
 
     protected $parser = NULL;
     protected $processType = NULL;
@@ -20,7 +21,7 @@ abstract class AbstractComponent implements Process {
     }
 
     /*
-     * Returns html string, depending of decoding attribute
+     * Implementing interface GetDomData
      * */
     public function getHtmlString () {
         return $this->parser->save();

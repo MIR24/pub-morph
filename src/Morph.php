@@ -6,31 +6,31 @@ use MIR24\Morph\AbstractMorph;
 class Morph extends AbstractMorph {
 
     public function incut () {
-        $this->component = $this->loadComponent('Incut');
+        $this->loadComponent('Incut');
 
         return $this;
     }
 
     public function banner () {
-        $this->component = $this->loadComponent('Banner');
+        $this->loadComponent('Banner');
 
         return $this;
     }
 
     public function incutTemplateGenerator () {
-        $this->component = $this->loadComponent('IncutTemplateGenerator');
+        $this->loadComponent('IncutTemplateGenerator');
 
         return $this;
     }
 
     public function amp () {
-        $this->component = $this->loadComponent('Amp');
+        $this->loadComponent('Amp');
 
         return $this;
     }
 
     public function image () {
-        $this->component = $this->loadComponent('Image');
+        $this->loadComponent('Image');
 
         return $this;
     }
