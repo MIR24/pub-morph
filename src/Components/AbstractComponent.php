@@ -9,10 +9,21 @@ abstract class AbstractComponent implements Process {
     protected $processType = NULL;
     protected $processData = NULL;
 
-    function __construct(&$parser) {
-        $this->parser = &$parser;
+    function __construct($parser) {
+        $this->parser = $parser;
 
         return $this;
+    }
+
+    function __destruct () {
+        $this->parser->clear();
+    }
+
+    /*
+     * Returns html string, depending of decoding attribute
+     * */
+    public function getHtmlString () {
+        return $this->parser->save();
     }
 
     /*

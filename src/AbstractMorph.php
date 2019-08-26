@@ -5,13 +5,19 @@ use Sunra\PhpSimple\HtmlDomParser;
 
 use MIR24\Morph\Helpers\BracketsHelper;
 
+use MIR24\Morph\Components\Incut;
+use MIR24\Morph\Components\Banner;
+use MIR24\Morph\Components\IncutTemplateGenerator;
+use MIR24\Morph\Components\Amp;
+use MIR24\Morph\Components\Image;
+
 abstract class AbstractMorph
 {
     protected $parser;
     protected $component;
 
     function __construct ($publicationSource) {
-        $this->parser = HtmlDomParser::str_get_html($this->processLoadingHtmlString($publicationSource));
+        $this->loadParser($publicationSource);
 
         return $this;
     }
@@ -20,24 +26,28 @@ abstract class AbstractMorph
         $this->parser->clear();
     }
 
-    /*
-     * Helper function for processing html string before loading
-     * */
-    private function processLoadingHtmlString ($str) {
-        return BracketsHelper::load($str);
+    private function loadParser ($str) {
+        $this->parser = HtmlDomParser::str_get_html(BracketsHelper::load($str));
     }
 
-    /*
-     * Clear memory and load new string
-     * */
-    public function setHtmlString ($str) {
-        $this->parser->load($this->processLoadingHtmlString($str));
+    protected function loadComponent ($className) {
+        $this->updateParser();
+        $this->component = new $className ($this->parser);
+        $this->parser->clear();
+    }
+
+    private function updateParser () {
+        if ($this->component) {
+            $this->loadParser($this->component->getHtmlString());
+        }
     }
 
     /*
      * Returns html string, depending of decoding attribute
      * */
     public function getHtmlString () {
+        $this->updateParser();
+
         return BracketsHelper::unload($this->parser->save());
     }
 
