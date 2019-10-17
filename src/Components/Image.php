@@ -154,7 +154,7 @@ class Image extends AbstractComponent implements Attribute {
             $caption = '<figcaption>'.$caption.'</figcaption>';
         }
 
-        return '<figure>'.$content.$caption.'</figure>';
+        return '<figure class="'.Config::get('image.figure-class').'">'.$content.$caption.'</figure>';
     }
 
 }

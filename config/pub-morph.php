@@ -145,6 +145,7 @@ return [
         ],
     ],
     'image' => [
+        'figure-class' => 'img-figure',
         'attrImageIdName' => 'data-attribute-mir24-image-id',
         'attrImageCaptionName' => 'data-attribute-mir24-image-caption',
         'amp' => [
