@@ -125,8 +125,8 @@ class Image extends AbstractComponent implements Attribute {
             }
 
             $ampImg = $this->wrapInFigure(str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg), $node->getAttribute(Config::get('image.attrImageCaptionName')));
-            $node->outertext = '';
-            $node->parent->innertext = $ampImg;
+            $node->tag = 'figure';
+            $node->outertext = $ampImg;
             continue;
         }
     }
