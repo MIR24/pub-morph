@@ -148,6 +148,7 @@ return [
         'figure-class' => 'img-figure',
         'attrImageIdName' => 'data-attribute-mir24-image-id',
         'attrImageCaptionName' => 'data-attribute-mir24-image-caption',
+        'regex-img-style-keep' => '#(height|boarder).+?;#',
         'amp' => [
             'type' => 'img',
             'exit_tag' => '<amp-img

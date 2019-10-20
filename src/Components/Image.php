@@ -67,7 +67,16 @@ class Image extends AbstractComponent implements Attribute {
         foreach($nodes as $node) {
             if ($this->isProcessAllowed($node)) {
                 $caption = $node->getAttribute(Config::get('image.attrImageCaptionName'));
-                $node->outertext = $this->wrapInFigure(LightboxHelper::process($lightboxSrc, $lightboxSrc, $caption, $node->outertext), $caption);
+                $style = $node->getAttribute('style');
+                $imgStyle = '';
+
+                $style = preg_replace_callback(Config::get('image.regex-img-style-keep'), function ($matches) use (&$imgStyle) {
+                    $imgStyle .= $matches[0];
+                    return '';
+                }, $style);
+                $node->setAttribute('style', $imgStyle);
+
+                $node->outertext = $this->wrapInFigure(LightboxHelper::process($lightboxSrc, $lightboxSrc, $caption, $node->outertext), $caption, $style);
             }
         }
     }
@@ -116,6 +125,7 @@ class Image extends AbstractComponent implements Attribute {
             }
 
             $ampImg = $this->wrapInFigure(str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg), $node->getAttribute(Config::get('image.attrImageCaptionName')));
+            $node->outertext = '';
             $node->parent->innertext = $ampImg;
             continue;
         }
@@ -149,12 +159,12 @@ class Image extends AbstractComponent implements Attribute {
     /*
      * Warp with figure html tag.
      * */
-    private function wrapInFigure ($content, $caption = NULL) {
+    private function wrapInFigure ($content, $caption = NULL, $style = NULL) {
         if ($caption) {
             $caption = '<figcaption>'.$caption.'</figcaption>';
         }
 
-        return '<figure class="'.Config::get('image.figure-class').'">'.$content.$caption.'</figure>';
+        return '<figure '.($style ? 'style="'.$style.'"' : '').' class="'.Config::get('image.figure-class').'">'.$content.$caption.'</figure>';
     }
 
 }
