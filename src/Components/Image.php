@@ -74,7 +74,17 @@ class Image extends AbstractComponent implements Attribute {
     private function replaceDefault ($nodes, $lightboxSrc) {
         foreach($nodes as $node) {
             if ($this->isProcessAllowed($node)) {
-                $node->outertext = LightboxHelper::process($lightboxSrc, $lightboxSrc, '', $node->outertext);
+                $caption = $node->getAttribute(Config::get('image.attrImageCaptionName'));
+                $style = $node->getAttribute('style');
+                $imgStyle = '';
+
+                $style = preg_replace_callback(Config::get('image.regex-img-style-keep'), function ($matches) use (&$imgStyle) {
+                    $imgStyle .= $matches[0];
+                    return '';
+                }, $style);
+                $node->setAttribute('style', $imgStyle);
+
+                $node->outertext = $this->wrapInFigure(LightboxHelper::process($lightboxSrc, $lightboxSrc, $caption, $node->outertext), $caption, $style);
             }
         }
     }
@@ -122,8 +132,9 @@ class Image extends AbstractComponent implements Attribute {
                 $imgSrc= 'https:' . substr($imgSrc, $httpsSwitch, -1);
             }
 
-            $ampImg = str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg);
-            $node->parent->innertext = $ampImg;
+            $ampImg = $this->wrapInFigure(str_replace(Config::get('image.amp.replace.src'), $imgSrc, $ampImg), $node->getAttribute(Config::get('image.attrImageCaptionName')));
+            $node->tag = 'figure';
+            $node->outertext = $ampImg;
             continue;
         }
 
@@ -185,6 +196,17 @@ class Image extends AbstractComponent implements Attribute {
             return true;
         }
         return false;
+    }
+
+    /*
+     * Warp with figure html tag.
+     * */
+    private function wrapInFigure ($content, $caption = NULL, $style = NULL) {
+        if ($caption) {
+            $caption = '<figcaption>'.$caption.'</figcaption>';
+        }
+
+        return '<figure '.($style ? 'style="'.$style.'"' : '').' class="'.Config::get('image.figure-class').'">'.$content.$caption.'</figure>';
     }
 
 }
