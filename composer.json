@@ -8,5 +8,13 @@
             "email": "yourchev@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "sunra/php-simple-html-dom-parser": "1.5.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "MIR24\\Morph\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
 }
