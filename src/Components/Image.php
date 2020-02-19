@@ -32,7 +32,8 @@ class Image extends AbstractComponent implements Attribute {
             if ($this->isProcessAllowed($node)) {
                 $result[] = [
                     'id' => $node->getAttribute(Config::get('image.attrImageIdName')),
-                    'src' => $node->getAttribute('src')
+                    'src' => $node->getAttribute('src'),
+                    'data-lightbox' => $node->getAttribute('data-lightbox')
                 ];
             }
         }
