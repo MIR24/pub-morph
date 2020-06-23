@@ -70,7 +70,7 @@ return [
         'blocks' => [
             [
                 'type' => 'iframe',
-                'regex_match_src' => '#www.youtube.com/embed/(.*)#',
+                'regex_match_src' => '#www.youtube.com/embed/(.*?)(\?|$)#',
                 'exit_tag' => '<amp-youtube
                                     width="870"
                                     height="489"
