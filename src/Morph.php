@@ -7,11 +7,18 @@ use MIR24\Morph\Components\Banner;
 use MIR24\Morph\Components\Image;
 use MIR24\Morph\Components\Incut;
 use MIR24\Morph\Components\IncutTemplateGenerator;
+use MIR24\Morph\Components\PhotoIncut;
 
 class Morph extends AbstractMorph {
 
     public function incut () {
         $this->loadComponent(Incut::class);
+
+        return $this;
+    }
+
+    public function photoIncut () {
+        $this->loadComponent(PhotoIncut::class);
 
         return $this;
     }

@@ -22,6 +22,11 @@ return [
         ],
         'uniquePrefix' => 'uniq-mir24-incut-',
     ],
+    'photoIncut' => [
+        'tag' => 'div',
+        'class' => 'own-photos-incuts',
+        'attr' => 'data-index',
+    ],
     'incutTemplate' => [
         'regex_extract_pattern' => '#({(.*)})#',
         'dataAttrName' => 'data-attribute-replace',

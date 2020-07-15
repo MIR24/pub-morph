@@ -8,10 +8,11 @@ use MIR24\Morph\Config\Config;
 use MIR24\Morph\Config\Constants;
 
 use MIR24\Morph\Traits\DomHelper;
+use MIR24\Morph\Traits\IncutReplaceHelper;
 
 class Incut extends AbstractComponent implements Attribute {
 
-    use DomHelper;
+    use DomHelper, IncutReplaceHelper;
 
     /*
      * Implementing interface Attribute
@@ -92,29 +93,6 @@ class Incut extends AbstractComponent implements Attribute {
     }
 
     /*
-     * Removes node from publication, than returns publication text morphed.
-     * */
-    private function remove(int $id) {
-        foreach ($this->findById($id) as $node) {
-            $node->outertext = '';
-            $this->removeOldStyles($node);
-            $this->removeParentNodeIfEmpty($node);
-        }
-        return $this;
-    }
-
-    /*
-     * Fillup node with a specific content, than returns publication text morphed.
-     * */
-    private function replace(int $id, string $content) {
-        foreach ($this->findById($id) as $node) {
-            $this->removeOldStyles($node);
-            $node->outertext = $content;
-        }
-        return $this;
-    }
-
-    /*
      * Fillup node with a specific content, making incut interactive.
      * */
     private function makeInactive (int $id, string $msg) {
@@ -136,17 +114,6 @@ class Incut extends AbstractComponent implements Attribute {
             $node->innertext = Config::get('incut.delete.msg');
         }
         return $this;
-    }
-
-    /*
-     * Remove preset style tag
-     * */
-    private function removeOldStyles ($node) {
-        $sibling = $node->prev_sibling();
-
-        if ($sibling && $sibling->tag === 'style') {
-            $sibling->outertext = '';
-        }
     }
 
     /*
