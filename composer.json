@@ -1,6 +1,7 @@
 {
     "name": "mir24/pub-morph",
     "description": "Morphes publication text after given ruleset",
+    "homepage": "https://github.com/MIR24/pub-morph",
     "type": "library",
     "authors": [
         {
