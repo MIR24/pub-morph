@@ -11,6 +11,9 @@ class PhotoIncut extends AbstractComponent implements Attribute
 {
     use DomHelper, IncutReplaceHelper;
 
+    public const TYPE_AMP = 'amp';
+    public const TYPE_YANDEX_TURBO = 'yandex-turbo';
+
     /*
      * Implementing interface Attribute
      * */
@@ -23,18 +26,6 @@ class PhotoIncut extends AbstractComponent implements Attribute
      * Implementing interface Process
      * */
     public function process()
-    {
-        switch ($this->processType) {
-            case 'amp':
-                $this->processAmp();
-                break;
-        }
-    }
-
-    /*
-     * Processing amp type
-     * */
-    private function processAmp()
     {
         foreach ($this->processData as $data) {
             if ($data['active'] && $data['code']) {
@@ -60,6 +51,6 @@ class PhotoIncut extends AbstractComponent implements Attribute
     {
         # TODO С классом тут почему-то не находит, а в findById(int $id) находит. Вроде класс распознаётся как значение. Обновить php-simple-html-dom-parser?
 //         return $this->parser->find(sprintf("%s.%s[%s]", Config::get('photoIncut.tag'), Config::get('photoIncut.class'), Config::get('photoIncut.attr')));
-         return $this->parser->find(sprintf("%s[%s]", Config::get('photoIncut.tag'), Config::get('photoIncut.attr')));
+        return $this->parser->find(sprintf("%s[%s]", Config::get('photoIncut.tag'), Config::get('photoIncut.attr')));
     }
 }
