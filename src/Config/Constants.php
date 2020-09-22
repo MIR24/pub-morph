@@ -3,7 +3,6 @@ namespace MIR24\Morph\Config;
 
 class Constants
 {
-    const COMPONENTS_LOCATION = 'MIR24\\Morph\\Components\\';
     const CONFIG_NAME = 'pub-morph';
     const EXCEPTION_MSG_START = 'Library MIR24\Morph ERROR:';
     const EXCEPTION_MSG_ROOT_NOT_NOT_FOUND = 'Root node not found';

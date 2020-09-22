@@ -34,7 +34,6 @@ abstract class AbstractMorph implements GetDomData
      * */
     protected function loadComponent ($className) {
         $this->updateParser();
-        $className = Constants::COMPONENTS_LOCATION . $className;
         $this->component = new $className ($this->parser);
     }
 

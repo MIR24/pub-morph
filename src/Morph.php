@@ -2,35 +2,47 @@
 namespace MIR24\Morph;
 
 use MIR24\Morph\AbstractMorph;
+use MIR24\Morph\Components\Amp;
+use MIR24\Morph\Components\Banner;
+use MIR24\Morph\Components\Image;
+use MIR24\Morph\Components\Incut;
+use MIR24\Morph\Components\IncutTemplateGenerator;
+use MIR24\Morph\Components\PhotoIncut;
 
 class Morph extends AbstractMorph {
 
     public function incut () {
-        $this->loadComponent('Incut');
+        $this->loadComponent(Incut::class);
+
+        return $this;
+    }
+
+    public function photoIncut () {
+        $this->loadComponent(PhotoIncut::class);
 
         return $this;
     }
 
     public function banner () {
-        $this->loadComponent('Banner');
+        $this->loadComponent(Banner::class);
 
         return $this;
     }
 
     public function incutTemplateGenerator () {
-        $this->loadComponent('IncutTemplateGenerator');
+        $this->loadComponent(IncutTemplateGenerator::class);
 
         return $this;
     }
 
     public function amp () {
-        $this->loadComponent('Amp');
+        $this->loadComponent(Amp::class);
 
         return $this;
     }
 
     public function image () {
-        $this->loadComponent('Image');
+        $this->loadComponent(Image::class);
 
         return $this;
     }

@@ -22,6 +22,11 @@ return [
         ],
         'uniquePrefix' => 'uniq-mir24-incut-',
     ],
+    'photoIncut' => [
+        'tag' => 'div',
+        'class' => 'own-photos-incuts',
+        'attr' => 'data-index',
+    ],
     'incutTemplate' => [
         'regex_extract_pattern' => '#({(.*)})#',
         'dataAttrName' => 'data-attribute-replace',
@@ -70,7 +75,7 @@ return [
         'blocks' => [
             [
                 'type' => 'iframe',
-                'regex_match_src' => '#www.youtube.com/embed/(.*)#',
+                'regex_match_src' => '#www.youtube.com/embed/(.*?)(\?|$)#',
                 'exit_tag' => '<amp-youtube
                                     width="870"
                                     height="489"
