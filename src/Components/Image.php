@@ -46,7 +46,7 @@ class Image extends AbstractComponent implements Attribute {
      * */
     public function process () {
         switch ($this->processType) {
-            case 'amp': 
+            case 'amp':
                 $this->processAmp();
                 break;
             default:
@@ -59,12 +59,10 @@ class Image extends AbstractComponent implements Attribute {
      * */
     private function processDefault () {
         foreach ($this->processData as $data) {
-            if ($data['lightboxSrc']) {
-                if ($data['id']) {
-                    $this->replaceDefault($this->findByAttrTypeAndContent(Config::get('image.attrImageIdName'), $data['id']), $data['lightboxSrc']);
-                } else if ($data['src']) {
-                    $this->replaceDefault($this->findByAttrTypeAndContent('src', $data['src']), $data['lightboxSrc']);
-                }
+            if ($data['id']) {
+                $this->replaceDefault($this->findByAttrTypeAndContent(Config::get('image.attrImageIdName'), $data['id']), $data['lightboxSrc'] ?? null);
+            } else if ($data['src']) {
+                $this->replaceDefault($this->findByAttrTypeAndContent('src', $data['src']), $data['lightboxSrc'] ?? null);
             }
         }
     }
@@ -84,8 +82,11 @@ class Image extends AbstractComponent implements Attribute {
                     return '';
                 }, $style);
                 $node->setAttribute('style', $imgStyle);
+                $content = $lightboxSrc
+                    ? LightboxHelper::process($lightboxSrc, $lightboxSrc, $caption, $node->outertext)
+                    : $node->outertext;
 
-                $node->outertext = $this->wrapInFigure(LightboxHelper::process($lightboxSrc, $lightboxSrc, $caption, $node->outertext), $caption, $style);
+                $node->outertext = $this->wrapInFigure($content, $caption, $style);
             }
         }
     }
